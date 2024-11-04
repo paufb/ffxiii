@@ -1,0 +1,218 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.ruler-title {
+  font-family: "Two Weekends Sans";
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 3px black,
+               0 0 3px black,
+               0 0 3px black,
+               0 0 3px black,
+               0 0 3px black;
+
+  &.start {
+    text-align: start;
+  }
+
+  &.end {
+    text-align: end;
+  }
+}
+
+.ruler {
+  height: 2px;
+  margin-bottom: 0.25rem;
+  background: white;
+  box-shadow: 0 0 3px black,
+              0 0 3px black,
+              0 0 3px black,
+              0 0 3px black,
+              0 0 3px black;
+}
+
+.ruler-one {
+  height: 2px;
+  background: rgb(100, 100, 100);
+  margin-bottom: 0.25rem;
+}
+
+.ruler-two {
+  height: 2px;
+  background: linear-gradient(to top, rgb(128, 128, 128), transparent);
+  margin-bottom: 0.5rem;
+}
+
+.categories-container {
+  max-width: 41rem;
+}
+
+.categories {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  background-image: linear-gradient(to right, rgb(30, 30, 30), transparent);
+  overflow: hidden;
+  font-family: "Two Weekends Sans";
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 3px black,
+               0 0 3px black,
+               0 0 3px black,
+               0 0 3px black,
+               0 0 3px black;
+}
+
+.category-cursor {
+  position: absolute;
+  transform: translateX(-105%) translateY(20%);
+  z-index: 1;
+  display: none;
+}
+
+.category {
+  display: flex;
+  align-items: end;
+  width: 45rem;
+  height: 2rem;
+  position: relative;
+  cursor: pointer;
+  padding-left: 9rem;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 100 100'><polygon points='0,1.5 18,1.5 100,100 0,100' fill='rgb(30, 30, 30)' /></svg>");
+  background-size: cover;
+
+  &.active .category-cursor {
+    display: block;
+  }
+
+  &:not(.active):hover .category-cursor {
+    display: block;
+    opacity: 0.5;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 0.1rem;
+    top: 0;
+    background: linear-gradient(to right, rgb(137, 137, 137), transparent);
+  }
+}
+
+.table-container {
+  color: white;
+  position: relative;
+  overflow: visible;
+  z-index: 0;
+}
+
+.table {
+  width: 100%;
+  position: relative;
+  table-layout: fixed;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: black;
+}
+
+.table-header-row {
+  font-family: "Xoireqe";
+  font-size: 0.75rem;
+  height: 1.5rem;
+  color: rgb(208, 208, 208);
+  background: linear-gradient(to bottom, black, rgba(47, 47, 47));
+}
+
+.item-column-name {
+  display: flex;
+  justify-content: start;
+  padding-left: 0.3rem;
+}
+
+.quantity-column-name {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 0.3rem;
+}
+
+.table-row {
+  position: relative;
+
+  & td {
+    position: relative;
+    box-sizing: border-box;
+    border-top: 1px solid white;
+    border-bottom: 1px solid black;
+  }
+
+  & td::before,
+  & td::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 0.175rem;
+  }
+
+  & td::before {
+    top: 0;
+    background: linear-gradient(to bottom, white, transparent);
+  }
+
+  & td::after {
+    bottom: 0;
+    background: linear-gradient(to top, black, transparent);
+  }
+}
+
+.item-name, .item-quantity, .item-description {
+  font-family: "Two Weekends Sans";
+}
+
+.item-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.item-cursor {
+  position: absolute;
+  transform: translateX(-75%) translateY(20%);
+  z-index: 1;
+  display: none;
+}
+
+.item-description {
+  color: black;
+}
+
+.item-name {
+  display: flex;
+  align-items: center;
+  height: 2rem;
+  background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 100 100'><polygon points='0,0 100,0 0,100' fill='rgb(165, 165, 165)' /></svg>");
+  background-size: cover;
+  padding: 0 1.75rem 0 0.3rem;
+  gap: 0.25rem;
+  white-space: nowrap;
+  color: black;
+  cursor: pointer;
+
+  &.active .item-cursor {
+    display: block;
+  }
+
+  &:not(.active):hover .item-cursor {
+    display: block;
+    opacity: 0.5;
+  }
+}
+
+.item-quantity {
+  display: flex;
+  align-items: center;
+}
