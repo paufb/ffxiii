@@ -1,5 +1,5 @@
 :root {
-  --app-max-width: 82rem;
+  --app-max-width: 100rem;
   --app-padding: 1rem;
   --navbar-header-height: 4rem;
   --sidebar-width: 23rem;
@@ -8,7 +8,8 @@
 #root {
   margin: 0 auto;
   padding: var(--app-padding);
-  max-width: var(--app-max-width);
+  width: var(--app-max-width);
+  min-width: var(--app-max-width);
 }
 
 .background {
