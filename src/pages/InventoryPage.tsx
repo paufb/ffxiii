@@ -6,6 +6,7 @@ import { ComponentsInventory } from '../components/ComponentsInventory.tsx';
 import { KeyItemsInventory } from '../components/KeyItemsInventory.tsx';
 import CursorIcon from '../assets/FFXIII_Pointer_White_BG.webp';
 import styles from './InventoryPage.module.css';
+import pageAnimations from './page-animations.module.css';
 import { InventoryCategory } from '../types.ts';
 
 export function InventoryPage() {
@@ -32,7 +33,7 @@ export function InventoryPage() {
 
   return (
     <div className={styles['page']}>
-      <div className={styles['categories-container']}>
+      <div className={`${styles['categories-container']} ${pageAnimations['fade-in-from-left']}`}>
         <div className={`${styles['ruler-title']} ${styles['end']}`}>
           Inventory
         </div>
@@ -50,7 +51,9 @@ export function InventoryPage() {
           ))}
         </ul>
       </div>
-      {renderInventoryCategory(activeCategory)}
+      <div className={pageAnimations['fade-in-from-right']}>
+        {renderInventoryCategory(activeCategory)}
+      </div>
     </div>
   );
 }
