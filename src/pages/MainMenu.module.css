@@ -34,7 +34,7 @@
 }
 
 .categories-container {
-  max-width: 23rem;
+  max-width: var(--app-categories-max-width);
 }
 
 .categories {
