@@ -3,6 +3,7 @@ import './App.css'
 import './fonts.css';
 import { MainMenuPage } from './pages/MainMenu.tsx';
 import { InventoryPage } from './pages/InventoryPage.tsx';
+import { HelpHeader } from './components/HelpHeader.tsx';
 
 function App() {
   const routes = useRoutes([
@@ -13,6 +14,7 @@ function App() {
   return (
     <>
       <div className="background" />
+      <HelpHeader theme={'dark'} />
       {routes}
     </>
   );
