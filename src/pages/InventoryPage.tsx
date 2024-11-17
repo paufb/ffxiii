@@ -4,10 +4,10 @@ import { WeaponsInventory } from '../components/WeaponsInventory.tsx';
 import { AccessoriesInventory } from '../components/AccessoriesInventory.tsx';
 import { ComponentsInventory } from '../components/ComponentsInventory.tsx';
 import { KeyItemsInventory } from '../components/KeyItemsInventory.tsx';
-import CursorIcon from '../assets/FFXIII_Pointer_White_BG.webp';
 import styles from './InventoryPage.module.css';
 import pageAnimations from './page-animations.module.css';
 import { InventoryCategory } from '../types.ts';
+import { Cursor } from '../components/Cursor.tsx';
 
 export function InventoryPage() {
   const [activeCategory, setActiveCategory] = useState<InventoryCategory>('Items');
@@ -38,7 +38,7 @@ export function InventoryPage() {
               className={`${styles['category']} ${activeCategory === category ? styles['active'] : ''}`}
               onClick={() => setActiveCategory(category)}
             >
-              <img className={styles['category-cursor']} src={CursorIcon} alt="" />
+              <Cursor className={styles['category-cursor']} animated={activeCategory === category} />
               <span className="outlined">{category}</span>
             </li>
           ))}
