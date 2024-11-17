@@ -31,7 +31,7 @@ export function MainMenuPage() {
     };
     return (
       <div
-        className={`${styles['character-card-role']} ${styles['text-outlined']}`}
+        className={`${styles['character-card-role']} outlined`}
         style={{
           background: `-webkit-linear-gradient(${roleColors[role]} -80%, white 100%)`,
           WebkitBackgroundClip: 'text',
@@ -45,8 +45,10 @@ export function MainMenuPage() {
 
   function renderPartyStatus(index: number) {
     return index >= 0 && index <= 2 && (
-      <div className={`${styles['character-card-party-status']} ${styles['text-outlined']}`}>
-        {index === 0 ? 'Leader' : index === 1 || index === 2 ? 'Member' : null}
+      <div className={styles['character-card-party-status']}>
+        <span className="outlined">
+          {index === 0 ? 'Leader' : index === 1 || index === 2 ? 'Member' : null}
+        </span>
         <img src={PartyLeaderIcon} style={{ filter: `grayscale(${index === 0 ? '0' : '1'})` }} />
       </div>
     );
@@ -55,16 +57,16 @@ export function MainMenuPage() {
   return (
     <div className={styles['page']}>
       <div className={`${styles['categories-container']} ${pageAnimations['fade-in-from-left']}`}>
-        <div className={`${styles['ruler-title']} ${styles['end']}`}>
+        <div className={`${styles['ruler-title']} ${styles['end']} outlined`}>
           Main Menu
         </div>
-        <div className={styles['ruler']} />
+        <div className={`${styles['ruler']} outlined`} />
         <ul className={styles['categories']}>
           {Object.entries(categoryRoutes).map(([categoryName, route]) => (
             <li key={categoryName} className={styles['category']}>
               <img className={styles['category-cursor']} src={CursorIcon} alt="" />
               <NavLink to={route}>
-                <span>{categoryName}</span>
+                <span className="outlined">{categoryName}</span>
               </NavLink>
             </li>
           ))}
@@ -79,7 +81,7 @@ export function MainMenuPage() {
           <img src={character.imgURL} />
           {renderRole(character.role)}
           {renderPartyStatus(index)}
-          <div className={`${styles['character-card-stats']} ${styles['text-outlined']}`}>
+          <div className={`${styles['character-card-stats']} outlined`}>
             <div className={styles['character-card-hp-label']}>HP</div>
             <div className={styles['character-card-value']}>{Math.round(3000 * (1 + (Math.random() * 0.6 - 0.3)))}</div>
             <div className={styles['character-card-cp-label']}>CP</div>

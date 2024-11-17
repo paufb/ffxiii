@@ -5,19 +5,20 @@ interface HelpHeaderProps {
 }
 
 export function HelpHeader({ theme }: HelpHeaderProps) {
+  const outlinedClass = theme === 'light' ? 'outlined' : '';
 
   return (
     <div className={`${styles['header']} ${styles[theme]}`}>
-      <div className={styles['ruler']} />
+      <div className={`${styles['ruler']} ${outlinedClass}`} />
       <div className={styles['help-container']}>
-        <span className={styles['int']}>
+        <span className={`${styles['int']} ${outlinedClass}`}>
           ?
         </span>
-        <span className={styles['help']}>
+        <span className={`${styles['help']} ${outlinedClass}`}>
           Help
         </span>
       </div>
-      <div className={styles['ruler']} />
+      <div className={`${styles['ruler']} ${outlinedClass}`} />
     </div>
   );
 }
