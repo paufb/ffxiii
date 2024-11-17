@@ -9,12 +9,10 @@
   &.light {
     & .ruler {
       background: white;
-      box-shadow: 0 0 3px black, 0 0 3px black, 0 0 3px black, 0 0 3px black, 0 0 3px black;
     }
     & .int,
     & .help {
       color: white;
-      filter: drop-shadow(0 0 1.5px black) drop-shadow(0 0 1.5px black) drop-shadow(0 0 1.5px black);
     }
   }
 

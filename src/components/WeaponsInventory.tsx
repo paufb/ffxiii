@@ -38,10 +38,10 @@ export function WeaponsInventory() {
       </div>
       <div className={styles['ruler-one']} />
       <div className={styles['ruler-two']} />
-      <div className={`${styles['ruler-title']} ${styles['start']}`}>
+      <div className={`${styles['ruler-title']} ${styles['start']} outlined`}>
         Inventory
       </div>
-      <div className={styles['ruler']} />
+      <div className={`${styles['ruler']} outlined`} />
       <table className={styles['table']}>
         <colgroup>
           <col />

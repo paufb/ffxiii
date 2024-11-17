@@ -4,14 +4,9 @@
 }
 
 .ruler-title {
-  font-family: "Two Weekends Sans";
+  font-family: 'Two Weekends Sans';
   font-weight: bold;
   color: white;
-  text-shadow: 0 0 3px black,
-               0 0 3px black,
-               0 0 3px black,
-               0 0 3px black,
-               0 0 3px black;
 
   &.start {
     text-align: start;
@@ -26,11 +21,6 @@
   height: 2px;
   margin-bottom: 0.25rem;
   background: white;
-  box-shadow: 0 0 3px black,
-              0 0 3px black,
-              0 0 3px black,
-              0 0 3px black,
-              0 0 3px black;
 }
 
 .ruler-one {
@@ -55,19 +45,14 @@
   padding: 0;
   background-image: linear-gradient(to right, rgb(30, 30, 30), transparent);
   overflow: hidden;
-  font-family: "Two Weekends Sans";
+  font-family: 'Two Weekends Sans';
   font-weight: bold;
   color: white;
-  text-shadow: 0 0 3px black,
-               0 0 3px black,
-               0 0 3px black,
-               0 0 3px black,
-               0 0 3px black;
 }
 
 .category-cursor {
   position: absolute;
-  transform: translateX(-105%) translateY(20%);
+  transform: translateX(140%) translateY(20%);
   z-index: 1;
   display: none;
 }
@@ -79,9 +64,12 @@
   height: 2rem;
   position: relative;
   cursor: pointer;
-  padding-left: 9rem;
   background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 100 100'><polygon points='0,1.5 18,1.5 100,100 0,100' fill='rgb(30, 30, 30)' /></svg>");
   background-size: cover;
+
+  & span {
+    transform: translateX(8rem);
+  }
 
   &.active .category-cursor {
     display: block;
@@ -93,7 +81,7 @@
   }
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     width: 100%;
@@ -120,7 +108,7 @@
 }
 
 .table-header-row {
-  font-family: "Xoireqe";
+  font-family: 'Xoireqe';
   font-size: 0.75rem;
   height: 1.5rem;
   color: rgb(208, 208, 208);
@@ -151,7 +139,7 @@
 
   & td::before,
   & td::after {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     width: 100%;
@@ -169,8 +157,10 @@
   }
 }
 
-.item-name, .item-quantity, .item-description {
-  font-family: "Two Weekends Sans";
+.item-name,
+.item-quantity,
+.item-description {
+  font-family: 'Two Weekends Sans';
 }
 
 .item-icon {

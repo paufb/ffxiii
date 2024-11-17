@@ -7,11 +7,6 @@
   font-family: 'Two Weekends Sans';
   font-weight: bold;
   color: white;
-  text-shadow: 0 0 3px black,
-               0 0 3px black,
-               0 0 3px black,
-               0 0 3px black,
-               0 0 3px black;
 
   &.start {
     text-align: start;
@@ -26,11 +21,6 @@
   height: 2px;
   margin-bottom: 0.25rem;
   background: white;
-  box-shadow: 0 0 3px black,
-              0 0 3px black,
-              0 0 3px black,
-              0 0 3px black,
-              0 0 3px black;
 }
 
 .categories-container {
@@ -46,11 +36,6 @@
   font-family: 'Two Weekends Sans';
   font-weight: bold;
   color: white;
-  text-shadow: 0 0 3px black,
-               0 0 3px black,
-               0 0 3px black,
-               0 0 3px black,
-               0 0 3px black;
 
   & .category {
     display: flex;
@@ -97,11 +82,6 @@
       background: linear-gradient(to right, rgb(137, 137, 137), transparent);
     }
   }
-}
-
-.text-outlined {
-  font-weight: bold;
-  -webkit-text-stroke: 0.125rem black;
 }
 
 .character-card {

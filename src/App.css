@@ -21,3 +21,11 @@
   z-index: -1;
   background: radial-gradient(ellipse at bottom, white 0%, rgb(150, 150, 150) 100%);
 }
+
+.outlined {
+  filter: drop-shadow(0 0 0.75px black)
+          drop-shadow(0 0 0.75px black)
+          drop-shadow(0 0 0.75px black)
+          drop-shadow(0 0 0.75px black)
+          drop-shadow(0 0 0.75px black);
+}

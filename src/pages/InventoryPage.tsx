@@ -11,33 +11,26 @@ import { InventoryCategory } from '../types.ts';
 
 export function InventoryPage() {
   const [activeCategory, setActiveCategory] = useState<InventoryCategory>('Items');
-
   const categories: InventoryCategory[] = ['Items', 'Weapons', 'Accessories', 'Components', 'Key Items'];
 
   function renderInventoryCategory(category: InventoryCategory) {
-    switch (category) {
-      case categories[0]:
-        return <ItemsInventory />;
-      case categories[1]:
-        return <WeaponsInventory />;
-      case categories[2]:
-        return <AccessoriesInventory />;
-      case categories[3]:
-        return <ComponentsInventory />;
-      case categories[4]:
-        return <KeyItemsInventory />;
-      default:
-        return null;
-    }
+    const categoriesMap: { [key in InventoryCategory]: JSX.Element } = {
+      'Items': <ItemsInventory />,
+      'Weapons': <WeaponsInventory />,
+      'Accessories': <AccessoriesInventory />,
+      'Components': <ComponentsInventory />,
+      'Key Items': <KeyItemsInventory />
+    };
+    return categoriesMap[category];
   }
 
   return (
     <div className={styles['page']}>
       <div className={`${styles['categories-container']} ${pageAnimations['fade-in-from-left']}`}>
-        <div className={`${styles['ruler-title']} ${styles['end']}`}>
+        <div className={`${styles['ruler-title']} ${styles['end']} outlined`}>
           Inventory
         </div>
-        <div className={styles['ruler']} />
+        <div className={`${styles['ruler']} outlined`} />
         <ul className={styles['categories']}>
           {categories.map(category => (
             <li
@@ -46,7 +39,7 @@ export function InventoryPage() {
               onClick={() => setActiveCategory(category)}
             >
               <img className={styles['category-cursor']} src={CursorIcon} alt="" />
-              {category}
+              <span className="outlined">{category}</span>
             </li>
           ))}
         </ul>
