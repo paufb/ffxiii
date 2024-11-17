@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import CursorIcon from '../assets/FFXIII_Pointer_White_BG.webp';
 import styles from '../pages/InventoryPage.module.css';
 import { Item } from '../types.ts';
+import { Cursor } from './Cursor.tsx';
 
 export function ItemsInventory() {
   const [items, setItems] = useState<{ [key: string]: Item }>({});
@@ -51,7 +51,7 @@ export function ItemsInventory() {
                   <td onClick={handleOnClickItem}>
                     <div className={`${styles['item-name']} ${selectedItemKey === itemName ? styles['active'] : ''}`}>
                       <img className={styles['item-icon']} src={''} alt="" />
-                      <img className={styles['item-cursor']} src={CursorIcon} alt="" />
+                      <Cursor className={styles['item-cursor']} animated={selectedItemKey === itemName} />
                       {itemName}
                     </div>
                   </td>
@@ -63,7 +63,7 @@ export function ItemsInventory() {
                   <td onClick={handleOnClickItem}>
                     <div className={`${styles['item-name']} ${selectedItemKey === nextItemName ? styles["active"] : ""}`}>
                       <img className={styles['item-icon']} src={""} alt="" />
-                      <img className={styles['item-cursor']} src={CursorIcon} alt="" />
+                      <Cursor className={styles['item-cursor']} animated={selectedItemKey === nextItemName} />
                       {nextItemName}
                     </div>
                   </td>

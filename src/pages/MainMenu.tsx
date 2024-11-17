@@ -1,9 +1,9 @@
 import { NavLink } from 'react-router-dom';
 import { Character, MainMenuCategory, Role } from '../types.ts';
-import CursorIcon from '../assets/FFXIII_Pointer_White_BG.webp';
 import PartyLeaderIcon from '../assets/Leader-ffxiii-icon.png';
 import styles from './MainMenu.module.css';
 import pageAnimations from './page-animations.module.css';
+import { Cursor } from '../components/Cursor.tsx';
 
 export function MainMenuPage() {
   const categoryRoutes: { [key in MainMenuCategory]: string } = {
@@ -64,7 +64,7 @@ export function MainMenuPage() {
         <ul className={styles['categories']}>
           {Object.entries(categoryRoutes).map(([categoryName, route]) => (
             <li key={categoryName} className={styles['category']}>
-              <img className={styles['category-cursor']} src={CursorIcon} alt="" />
+              <Cursor className={styles['category-cursor']} animated={true} />
               <NavLink to={route}>
                 <span className="outlined">{categoryName}</span>
               </NavLink>

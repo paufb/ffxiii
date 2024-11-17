@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
-import CursorIcon from '../assets/FFXIII_Pointer_White_BG.webp';
 import styles from '../pages/InventoryPage.module.css';
 import { Weapon } from '../types.ts';
 import { StarIcon } from './StarIcon.tsx';
 import { CheckmarkIcon } from './CheckmarkIcon.tsx';
+import { Cursor } from './Cursor.tsx';
 
 export function WeaponsInventory() {
   const [weapons, setWeapons] = useState<{ [key: string]: Weapon }>({});
@@ -66,7 +66,7 @@ export function WeaponsInventory() {
                   <td onClick={() => setSelectedWeaponKey(weaponNameKey)}>
                     <div className={`${styles['item-name']} ${selectedWeaponKey === weaponNameKey ? styles["active"] : ""}`}>
                       <img className={styles['item-icon']} src={''} alt="" />
-                      <img className={styles['item-cursor']} src={CursorIcon} alt="" />
+                      <Cursor className={styles['item-cursor']} animated={selectedWeaponKey === weaponNameKey} />
                       {weaponNameKey} {renderLevelStar(weaponNameKey)}
                     </div>
                   </td>
@@ -78,7 +78,7 @@ export function WeaponsInventory() {
                   <td onClick={() => setSelectedWeaponKey(nextWeaponNameKey)}>
                     <div className={`${styles['item-name']} ${selectedWeaponKey === nextWeaponNameKey ? styles["active"] : ""}`}>
                       <img className={styles['item-icon']} src={""} alt="" />
-                      <img className={styles['item-cursor']} src={CursorIcon} alt="" />
+                      <Cursor className={styles['item-cursor']} animated={selectedWeaponKey === nextWeaponNameKey} />
                       {nextWeaponNameKey} {renderLevelStar(nextWeaponNameKey)}
                     </div>
                   </td>
