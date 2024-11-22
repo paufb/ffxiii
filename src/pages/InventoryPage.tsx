@@ -25,8 +25,8 @@ export function InventoryPage({ setHelpHeaderText }: InventoryPageProps) {
 
   function renderInventoryCategory(category: InventoryCategory) {
     const categoriesMap: { [key in InventoryCategory]: JSX.Element } = {
-      'Items': <ItemsInventory />,
-      'Weapons': <WeaponsInventory />,
+      'Items': <ItemsInventory setHelpHeaderText={setHelpHeaderText} />,
+      'Weapons': <WeaponsInventory setHelpHeaderText={setHelpHeaderText} />,
       'Accessories': <AccessoriesInventory />,
       'Components': <ComponentsInventory />,
       'Key Items': <KeyItemsInventory />

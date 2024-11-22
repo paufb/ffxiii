@@ -23,18 +23,6 @@
   background: white;
 }
 
-.ruler-one {
-  height: 2px;
-  background: rgb(100, 100, 100);
-  margin-bottom: 0.25rem;
-}
-
-.ruler-two {
-  height: 2px;
-  background: linear-gradient(to top, rgb(128, 128, 128), transparent);
-  margin-bottom: 0.5rem;
-}
-
 .categories-container {
   max-width: var(--app-categories-max-width);
 }
@@ -158,8 +146,7 @@
 }
 
 .item-name,
-.item-quantity,
-.item-description {
+.item-quantity {
   font-family: 'Two Weekends Sans';
 }
 
@@ -173,10 +160,6 @@
   transform: translateX(-75%) translateY(20%);
   z-index: 1;
   display: none;
-}
-
-.item-description {
-  color: black;
 }
 
 .item-name {

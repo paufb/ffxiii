@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import styles from '../pages/InventoryPage.module.css';
 import { Weapon } from '../types.ts';
-import { StarIcon } from './StarIcon.tsx';
-import { CheckmarkIcon } from './CheckmarkIcon.tsx';
 import { Cursor } from './Cursor.tsx';
+import { CheckmarkIcon } from './CheckmarkIcon.tsx';
+import { StarIcon } from './StarIcon.tsx';
+import styles from '../pages/InventoryPage.module.css';
 
-export function WeaponsInventory() {
+interface WeaponsInventoryProps {
+  setHelpHeaderText: Function;
+}
+
+export function WeaponsInventory({ setHelpHeaderText }: WeaponsInventoryProps) {
   const [weapons, setWeapons] = useState<{ [key: string]: Weapon }>({});
   const [selectedWeaponKey, setSelectedWeaponKey] = useState<string>();
   const equippedWeapons = ['Blazefire Saber', 'Vega 42s', 'Wild Bear', 'Airwing', 'Binding Rod', 'Bladed Lance'];
@@ -31,13 +35,13 @@ export function WeaponsInventory() {
     return equippedWeapons.includes(weaponNameKey) ? <CheckmarkIcon /> : null;
   }
 
+  function handleOnClickWeapon(weaponNameKey: string) {
+    setSelectedWeaponKey(weaponNameKey);
+    setHelpHeaderText(weapons[weaponNameKey].description);
+  }
+
   return (
     <div className={styles['table-container']}>
-      <div className={styles['item-description']}>
-        {selectedWeaponKey ? weapons[selectedWeaponKey].description : 'View weapons in the party inventory.'}
-      </div>
-      <div className={styles['ruler-one']} />
-      <div className={styles['ruler-two']} />
       <div className={`${styles['ruler-title']} ${styles['start']} outlined`}>
         Inventory
       </div>
@@ -63,7 +67,7 @@ export function WeaponsInventory() {
             if (index % 2 === 0) {
               return (
                 <tr className={styles['table-row']} key={weaponNameKey + nextWeaponNameKey}>
-                  <td onClick={() => setSelectedWeaponKey(weaponNameKey)}>
+                  <td onClick={() => handleOnClickWeapon(weaponNameKey)}>
                     <div className={`${styles['item-name']} ${selectedWeaponKey === weaponNameKey ? styles["active"] : ""}`}>
                       <img className={styles['item-icon']} src={''} alt="" />
                       <Cursor className={styles['item-cursor']} animated={selectedWeaponKey === weaponNameKey} />
@@ -75,7 +79,7 @@ export function WeaponsInventory() {
                       {renderEquippedCheckmark(weaponNameKey)}
                     </div>
                   </td>
-                  <td onClick={() => setSelectedWeaponKey(nextWeaponNameKey)}>
+                  <td onClick={() => handleOnClickWeapon(nextWeaponNameKey)}>
                     <div className={`${styles['item-name']} ${selectedWeaponKey === nextWeaponNameKey ? styles["active"] : ""}`}>
                       <img className={styles['item-icon']} src={""} alt="" />
                       <Cursor className={styles['item-cursor']} animated={selectedWeaponKey === nextWeaponNameKey} />

@@ -1,9 +1,13 @@
 import { useEffect, useState } from 'react';
-import styles from '../pages/InventoryPage.module.css';
 import { Item } from '../types.ts';
 import { Cursor } from './Cursor.tsx';
+import styles from '../pages/InventoryPage.module.css';
 
-export function ItemsInventory() {
+interface ItemsInventoryProps {
+  setHelpHeaderText: Function;
+}
+
+export function ItemsInventory({ setHelpHeaderText }: ItemsInventoryProps) {
   const [items, setItems] = useState<{ [key: string]: Item }>({});
   const [selectedItemKey, setSelectedItemKey] = useState<string>();
 
@@ -13,16 +17,14 @@ export function ItemsInventory() {
 
   function handleOnClickItem(event: React.MouseEvent<HTMLTableCellElement>) {
     const selectedItemName = (event.target as HTMLTableCellElement).textContent?.trim();
-    if (selectedItemName) setSelectedItemKey(selectedItemName);
+    if (selectedItemName) {
+      setSelectedItemKey(selectedItemName);
+      setHelpHeaderText(items[selectedItemName].effect);
+    }
   }
 
   return (
     <div className={styles['table-container']}>
-      <div className={styles['item-description']}>
-        {selectedItemKey ? items[selectedItemKey].effect : 'View consumable items in the party inventory.'}
-      </div>
-      <div className={styles['ruler-one']} />
-      <div className={styles['ruler-two']} />
       <div className={`${styles['ruler-title']} ${styles['start']} outlined`}>
         Inventory
       </div>
