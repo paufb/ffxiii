@@ -6,10 +6,11 @@ import { StarIcon } from './StarIcon.tsx';
 import styles from '../pages/InventoryPage.module.css';
 
 interface WeaponsInventoryProps {
+  setHighlightedCharacter: Function;
   setHelpHeaderText: Function;
 }
 
-export function WeaponsInventory({ setHelpHeaderText }: WeaponsInventoryProps) {
+export function WeaponsInventory({ setHighlightedCharacter, setHelpHeaderText }: WeaponsInventoryProps) {
   const [weapons, setWeapons] = useState<{ [key: string]: Weapon }>({});
   const [selectedWeaponKey, setSelectedWeaponKey] = useState<string>();
   const equippedWeapons = ['Blazefire Saber', 'Vega 42s', 'Wild Bear', 'Airwing', 'Binding Rod', 'Bladed Lance'];
@@ -37,6 +38,7 @@ export function WeaponsInventory({ setHelpHeaderText }: WeaponsInventoryProps) {
 
   function handleOnClickWeapon(weaponNameKey: string) {
     setSelectedWeaponKey(weaponNameKey);
+    setHighlightedCharacter(weapons[weaponNameKey].character);
     setHelpHeaderText(weapons[weaponNameKey].description);
   }
 
