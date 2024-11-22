@@ -1,4 +1,5 @@
 .header {
+  position: relative;
   display: flex;
   align-items: end;
   width: 100%;
@@ -20,6 +21,13 @@
     & .ruler { background: rgb(100, 97, 104); }
     & .int { color: rgb(111, 112, 128); }
     & .help { color: rgb(46, 43, 53); }
+  }
+
+  .text {
+    position: absolute;
+    bottom: 0.15rem;
+    left: 14.5rem;
+    font-family: 'Two Weekends Sans';
   }
 }
 
