@@ -1,14 +1,19 @@
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Character, MainMenuCategory, Role } from '../types.ts';
+import { Cursor } from '../components/Cursor.tsx';
 import PartyLeaderIcon from '../assets/Leader-ffxiii-icon.png';
 import styles from './MainMenu.module.css';
 import pageAnimations from './page-animations.module.css';
-import { Cursor } from '../components/Cursor.tsx';
 
-export function MainMenuPage() {
-  const categoryRoutes: { [key in MainMenuCategory]: string } = {
-    'Inventory': '/inventory',
-    'Datalog': '/datalog'
+interface MainMenuPageProps {
+  setHelpHeaderText: Function;
+}
+
+export function MainMenuPage({ setHelpHeaderText }: MainMenuPageProps) {
+  const categoryRoutes: { [key in MainMenuCategory]: { url: string, headerText: string } } = {
+    'Inventory': { url: '/inventory', headerText: 'View party inventory.' },
+    'Datalog': { url: '/datalog', headerText: 'View log of accumulated data.' }
   };
   const charactersInfo: { [key in Character]: { role?: Role, imgURL: string } } = {
     'Lightning': { role: 'Commando', imgURL: new URL('../assets/Lightning.png', import.meta.url).href },
@@ -62,10 +67,10 @@ export function MainMenuPage() {
         </div>
         <div className={`${styles['ruler']} outlined`} />
         <ul className={styles['categories']}>
-          {Object.entries(categoryRoutes).map(([categoryName, route]) => (
+          {Object.entries(categoryRoutes).map(([categoryName, category]) => (
             <li key={categoryName} className={styles['category']}>
               <Cursor className={styles['category-cursor']} animated={true} />
-              <NavLink to={route}>
+              <NavLink to={category.url} onMouseEnter={() => setHelpHeaderText(category.headerText)}>
                 <span className="outlined">{categoryName}</span>
               </NavLink>
             </li>
@@ -92,3 +97,5 @@ export function MainMenuPage() {
     </div>
   );
 }
+
+export const MemoizedMainMenuPage = memo(MainMenuPage);

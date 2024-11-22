@@ -3,9 +3,10 @@ import pageAnimations from '../pages/page-animations.module.css';
 
 interface HelpHeaderProps {
   theme: 'light' | 'dark';
+  text: string;
 }
 
-export function HelpHeader({ theme }: HelpHeaderProps) {
+export function HelpHeader({ theme, text }: HelpHeaderProps) {
   const outlinedClass = theme === 'light' ? 'outlined' : '';
 
   return (
@@ -19,6 +20,9 @@ export function HelpHeader({ theme }: HelpHeaderProps) {
           Help
         </span>
       </div>
+      <span className={styles['text']}>
+        {text}
+      </span>
       <div className={`${styles['ruler']} ${outlinedClass}`} />
     </div>
   );
