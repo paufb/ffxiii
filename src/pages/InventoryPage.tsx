@@ -29,7 +29,7 @@ export function InventoryPage({ setHelpHeaderText }: InventoryPageProps) {
     const categoriesMap: { [key in InventoryCategory]: JSX.Element } = {
       'Items': <ItemsInventory setHelpHeaderText={setHelpHeaderText} />,
       'Weapons': <WeaponsInventory setHighlightedCharacter={setHighlightedCharacter} setHelpHeaderText={setHelpHeaderText} />,
-      'Accessories': <AccessoriesInventory />,
+      'Accessories': <AccessoriesInventory setHelpHeaderText={setHelpHeaderText} />,
       'Components': <ComponentsInventory />,
       'Key Items': <KeyItemsInventory />
     };
