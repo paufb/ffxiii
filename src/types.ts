@@ -12,3 +12,7 @@ export interface Weapon {
   character: Character;
   description: string;
 }
+
+export interface Accessory {
+  effect: string;
+}
