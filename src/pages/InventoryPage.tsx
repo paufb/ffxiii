@@ -31,7 +31,7 @@ export function InventoryPage({ setHelpHeaderText }: InventoryPageProps) {
       'Weapons': <WeaponsInventory setHighlightedCharacter={setHighlightedCharacter} setHelpHeaderText={setHelpHeaderText} />,
       'Accessories': <AccessoriesInventory setHelpHeaderText={setHelpHeaderText} />,
       'Components': <ComponentsInventory setHelpHeaderText={setHelpHeaderText} />,
-      'Key Items': <KeyItemsInventory />
+      'Key Items': <KeyItemsInventory setHelpHeaderText={setHelpHeaderText} />
     };
     return categoriesMap[category];
   }
