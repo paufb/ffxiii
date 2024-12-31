@@ -16,3 +16,7 @@ export interface Weapon {
 export interface Accessory {
   effect: string;
 }
+
+export interface Component {
+  description: string;
+}
