@@ -20,3 +20,7 @@ export interface Accessory {
 export interface Component {
   description: string;
 }
+
+export interface KeyItem {
+  description: string;
+}
