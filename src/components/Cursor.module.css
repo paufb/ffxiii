@@ -1,8 +1,0 @@
-@keyframes glide {
-  from { transform: translateX(-0.5rem); }
-  to { transform: translateX(0); }
-}
-
-.glide {
-  animation: glide 0.4s infinite alternate;
-}
