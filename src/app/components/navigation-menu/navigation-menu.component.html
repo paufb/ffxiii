@@ -1,0 +1,13 @@
+<aside>
+  <div class="item-title outlined">{{ title }}</div>
+  <hr class="outlined" />
+  <ul>
+    @for (item of items; track $index) {
+      <li>
+        <a [routerLink]="item.url" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <span class="outlined">{{ item.title }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+</aside>
