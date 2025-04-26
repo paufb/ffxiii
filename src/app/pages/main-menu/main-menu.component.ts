@@ -10,7 +10,15 @@ import { NavigationMenuComponent } from "../../components/navigation-menu/naviga
 export class MainMenuComponent {
   title = 'Main Menu';
   navigationMenuItems = [
-    { title: 'Inventory', url: '/inventory' },
-    { title: 'Datalog', url: '/datalog' }
+    {
+      title: 'Inventory',
+      url: '/inventory',
+      helpHeaderText: 'View party inventory.'
+    },
+    {
+      title: 'Datalog',
+      url: '/datalog',
+      helpHeaderText: 'View log of accumulated data.'
+    }
   ];
 }

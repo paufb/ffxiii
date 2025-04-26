@@ -49,6 +49,7 @@ a {
   height: 100%;
 
   & span {
+    font-weight: bold;
     transform: translateX(8rem);
   }
 }
