@@ -1,6 +1,5 @@
 <aside>
-  <div class="item-title outlined">{{ title }}</div>
-  <hr class="outlined" />
+  <app-title-ruler [title]="title" align="end" />
   <ul>
     @for (item of items; track $index) {
       <li (mouseenter)="setHelpHeaderText(item.helpHeaderText)">

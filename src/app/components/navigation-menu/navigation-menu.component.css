@@ -2,17 +2,9 @@ aside {
   width: 23rem;
 }
 
-.item-title {
-  font-weight: bold;
-  color: white;
-  text-align: end;
-}
-
-hr {
-  border: none;
-  height: .125rem;
-  margin: 0 0 .25rem 0;
-  background-color: white;
+app-title-ruler {
+  display: block;
+  margin-bottom: .25rem;
 }
 
 ul {

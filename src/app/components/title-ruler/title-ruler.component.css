@@ -1,0 +1,13 @@
+div {
+  font-weight: bold;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+hr {
+  border: none;
+  height: .125rem;
+  margin: 0;
+  background-color: white;
+}
