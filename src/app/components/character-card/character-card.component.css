@@ -26,21 +26,12 @@
 }
 
 .role {
-  --role-color: transparent;
   position: absolute;
   inset: .3rem .3rem auto auto;
   font-size: 1.3rem;
-  background: linear-gradient(var(--role-color) -80%, white 100%) text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   -webkit-background-clip: text;
-
-  &.commando { --role-color: red; }
-  &.ravager { --role-color: #8591c2; }
-  &.sentinel { --role-color: yellow; }
-  &.saboteur { --role-color: gray; }
-  &.synergist { --role-color: purple; }
-  &.medic { --role-color: #ccffcc; }
 }
 
 .icon {

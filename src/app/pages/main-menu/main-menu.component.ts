@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavigationMenuComponent } from "../../components/navigation-menu/navigation-menu.component";
-import { CharacterCardComponent } from "../../components/character-card/character-card.component";
+import { NavigationMenuComponent } from '../../components/navigation-menu/navigation-menu.component';
+import { CharacterCardComponent } from '../../components/character-card/character-card.component';
+import { characters } from '../../constants/characters';
 
 @Component({
   selector: 'app-main-menu',
@@ -22,4 +23,5 @@ export class MainMenuComponent {
       helpHeaderText: 'View log of accumulated data.'
     }
   ];
+  characters = Object.values(characters);
 }

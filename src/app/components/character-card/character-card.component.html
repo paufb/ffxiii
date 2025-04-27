@@ -1,26 +1,29 @@
 <div class="card">
   <img
-    [ngClass]="['background', character.toLowerCase(), active ? '' : 'inactive']"
+    [ngClass]="['background', character.name.toLowerCase(), character.isInParty ? '' : 'inactive']"
     [src]="getImgSrc(character)"
-    [alt]="character"
+    [alt]="character.name"
   />
-  @if (active) {
-    <span [ngClass]="['role', getCharacterRole(character).toLowerCase(), 'outlined']">
-      {{ getCharacterRole(character).slice(0, 3) }}
+  @if (character.isInParty) {
+    <span
+      class="role outlined"
+      [style.background]="`linear-gradient(${character.role.color} -80%, white 100%) text`"
+    >
+      {{ character.role.name.slice(0, 3) }}
     </span>
     <img
-      [ngClass]="['icon', leader ? '' : 'member']"
+      [ngClass]="['icon', character.isPartyLeader ? '' : 'member']"
       src="/assets/icons/Leader-ffxiii-icon.png"
-      [alt]="leader ? 'Leader' : 'Member'"
+      [alt]="character.isPartyLeader ? 'Leader' : 'Member'"
     />
     <span class="status outlined">
-      {{ leader ? 'Leader' : 'Member' }}
+      {{ character.isPartyLeader ? 'Leader' : 'Member' }}
     </span>
   }
   <div class="stats outlined">
     <span class="hp">HP</span>
-    <span class="value">{{ healthPoints }}</span>
+    <span class="value">{{ character.healthPoints }}</span>
     <span class="cp">CP</span>
-    <span class="value">0</span>
+    <span class="value">{{ character.crystogenPoints }}</span>
   </div>
 </div>

@@ -1,9 +1,6 @@
 <div class="content">
   <app-navigation-menu [title]="title" [items]="navigationMenuItems" />
-  <app-character-card character="Lightning" active leader />
-  <app-character-card character="Vanille" active />
-  <app-character-card character="Fang" active />
-  <app-character-card character="Snow" />
-  <app-character-card character="Sazh" />
-  <app-character-card character="Hope" />
+  @for (character of characters; track character.name) {
+    <app-character-card [character]="character" />
+  }
 </div>
