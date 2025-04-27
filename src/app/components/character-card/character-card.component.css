@@ -1,0 +1,93 @@
+.card {
+  position: relative;
+  height: 33rem;
+  border: .0625rem solid white;
+  border-radius: .5rem;
+  box-shadow: .5rem .5rem .3125rem #00000099;
+  overflow: hidden;
+  font-family: 'Xoireqe';
+}
+
+.background {
+  --transformations: scale(1);
+  position: absolute;
+  transform: var(--transformations);
+
+  &.lightning { --transformations: scale(1.15) translate(-30%, 7%); }
+  &.vanille { --transformations: scale(1.2) translate(-43.25%, 7%); }
+  &.fang { --transformations: scale(1.1) rotate(15deg) translate(-57%, 1%); }
+  &.snow { --transformations: translate(-49%, 1%); }
+  &.sazh { --transformations: translate(-25.5%, 0.5%); }
+  &.hope { --transformations: translate(-37%, -1%); }
+
+  &.inactive {
+    filter: grayscale(.7) brightness(.75);
+  }
+}
+
+.role {
+  --role-color: transparent;
+  position: absolute;
+  inset: .3rem .3rem auto auto;
+  font-size: 1.3rem;
+  background: linear-gradient(var(--role-color) -80%, white 100%) text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  &.commando { --role-color: red; }
+  &.ravager { --role-color: #8591c2; }
+  &.sentinel { --role-color: yellow; }
+  &.saboteur { --role-color: gray; }
+  &.synergist { --role-color: purple; }
+  &.medic { --role-color: #ccffcc; }
+}
+
+.icon {
+  position: absolute;
+  inset: 2.75rem auto auto 1rem;
+  transform: scale(1.5);
+
+  &.member {
+    filter: grayscale(1);
+  }
+}
+
+.status {
+  position: absolute;
+  inset: 3.5rem .5rem auto auto;
+  font-size: 1.25rem;
+  color: white;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  inset: auto .3rem .3rem .3rem;
+
+  & .hp,
+  & .cp {
+    font-size: 1.1rem;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+
+  & .hp {
+    background: linear-gradient(#ccffcc -80%, white 100%) text;
+  }
+
+  & .cp {
+    background: linear-gradient(red -80%, white 100%) text;
+  }
+
+  & .value {
+    text-align: right;
+    font-size: 1.3rem;
+    -webkit-text-fill-color: transparent;
+    background: linear-gradient(white 50%, gray 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+  }
+}

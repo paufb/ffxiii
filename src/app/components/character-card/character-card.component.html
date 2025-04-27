@@ -1,0 +1,26 @@
+<div class="card">
+  <img
+    [ngClass]="['background', character.toLowerCase(), active ? '' : 'inactive']"
+    [src]="getImgSrc(character)"
+    [alt]="character"
+  />
+  @if (active) {
+    <span [ngClass]="['role', getCharacterRole(character).toLowerCase(), 'outlined']">
+      {{ getCharacterRole(character).slice(0, 3) }}
+    </span>
+    <img
+      [ngClass]="['icon', leader ? '' : 'member']"
+      src="/assets/icons/Leader-ffxiii-icon.png"
+      [alt]="leader ? 'Leader' : 'Member'"
+    />
+    <span class="status outlined">
+      {{ leader ? 'Leader' : 'Member' }}
+    </span>
+  }
+  <div class="stats outlined">
+    <span class="hp">HP</span>
+    <span class="value">{{ healthPoints }}</span>
+    <span class="cp">CP</span>
+    <span class="value">0</span>
+  </div>
+</div>

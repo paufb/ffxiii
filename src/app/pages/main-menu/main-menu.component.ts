@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { NavigationMenuComponent } from "../../components/navigation-menu/navigation-menu.component";
+import { CharacterCardComponent } from "../../components/character-card/character-card.component";
 
 @Component({
   selector: 'app-main-menu',
-  imports: [NavigationMenuComponent],
+  imports: [NavigationMenuComponent, CharacterCardComponent],
   templateUrl: './main-menu.component.html',
   styleUrl: './main-menu.component.css'
 })
