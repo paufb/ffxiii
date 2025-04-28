@@ -1,3 +1,4 @@
+import { characterAssets } from '../constants/character-assets';
 import { Role } from './role.model';
 
 interface CharacterProps {
@@ -7,6 +8,7 @@ interface CharacterProps {
   crystogenPoints: number;
   isInParty: boolean;
   isPartyLeader: boolean;
+  assets: typeof characterAssets[string];
 }
 
 export class Character {
@@ -22,4 +24,5 @@ export class Character {
   get crystogenPoints() { return this.#props.crystogenPoints; }
   get isInParty() { return this.#props.isInParty; }
   get isPartyLeader() { return this.#props.isPartyLeader; }
+  get assets() { return this.#props.assets; }
 }

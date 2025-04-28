@@ -1,7 +1,10 @@
 <div class="card">
   <img
     [ngClass]="['background', character.name.toLowerCase(), character.isInParty ? '' : 'inactive']"
-    [src]="getImgSrc(character)"
+    [ngSrc]="character.assets.card.url"
+    priority
+    [width]="character.assets.card.width"
+    [height]="character.assets.card.height"
     [alt]="character.name"
   />
   @if (character.isInParty) {
@@ -12,7 +15,7 @@
     />
     <img
       [ngClass]="['icon', character.isPartyLeader ? '' : 'member']"
-      src="/assets/icons/Leader-ffxiii-icon.png"
+      src="assets/icons/Leader-ffxiii-icon.png"
       [alt]="character.isPartyLeader ? 'Leader' : 'Member'"
     />
     <span class="status text-outlined">
