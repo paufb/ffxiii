@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { NavigationMenuComponent } from "../../components/navigation-menu/navigation-menu.component";
+import { RouterOutlet } from '@angular/router';
+import { NavigationMenuComponent } from '../../components/navigation-menu/navigation-menu.component';
 
 @Component({
   selector: 'app-inventory',
-  imports: [NavigationMenuComponent],
+  imports: [RouterOutlet, NavigationMenuComponent],
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.css'
 })

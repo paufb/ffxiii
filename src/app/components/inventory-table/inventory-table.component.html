@@ -1,0 +1,41 @@
+<table>
+  <colgroup>
+    <col />
+    <col width="40" />
+    <col />
+    <col width="40" />
+  </colgroup>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>{{ columnTitle }}</th>
+      <th></th>
+      <th>{{ columnTitle }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (entryPair of getPairs(entries); track $index) {
+      <tr>
+        @for (entry of entryPair; track $index) {
+          <td (click)="setHelpHeaderText(entry.helpHeaderText)">
+            <div class="name">
+              {{ entry.name }}
+            </div>
+          </td>
+          <td>
+            <ng-container *ngIf="typeof entry.value === 'number'; else checkmark">
+              {{ entry.value.toString().padStart(2, '0') }}
+            </ng-container>
+            <ng-template #checkmark>
+              <div *ngIf="entry.value" [style.display]="'flex'">
+                <svg width="24" height="24" viewBox="0 0 24 24">
+                  <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" fill="white" />
+                </svg>
+              </div>
+            </ng-template>
+          </td>
+        }
+      </tr>
+    }
+  </tbody>
+</table>

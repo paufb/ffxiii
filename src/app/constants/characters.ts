@@ -1,5 +1,6 @@
 import { Character } from '../models/character.model';
 import { roles } from './roles';
+import { getRandomNumber } from './utils';
 
 export const characters: Record<string, Character> = {
   'Lightning': new Character({
@@ -51,7 +52,3 @@ export const characters: Record<string, Character> = {
     isPartyLeader: false
   })
 };
-
-function getRandomNumber(lowerBound: number, upperBound: number) {
-  return Math.floor(Math.random() * (upperBound - lowerBound + 1)) + lowerBound;
-}
