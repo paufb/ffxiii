@@ -19,10 +19,22 @@ body {
   font-family: 'Two Weekends Sans';
 }
 
-.outlined {
-  filter: drop-shadow(0 0 0.75px black)
-          drop-shadow(0 0 0.75px black)
-          drop-shadow(0 0 0.75px black)
-          drop-shadow(0 0 0.75px black)
-          drop-shadow(0 0 0.75px black);
+.text-outlined {
+  text-shadow: 2px 0 0 #000000,
+               1.75517px .958851px 0 #000000,
+               1.0806px 1.68294px 0 #000000,
+               .141474px 1.99499px 0 #000000,
+               -.832294px 1.81859px 0 #000000,
+               -1.60229px 1.19694px 0 #000000,
+               -1.97999px .28224px 0 #000000,
+               -1.87291px -.701566px 0 #000000,
+               -1.30729px -1.51361px 0 #000000,
+               -.421592px -1.95506px 0 #000000,
+               .567324px -1.91785px 0 #000000,
+               1.41734px -1.41108px 0 #000000,
+               1.92034px -.558831px 0 #000000;
+}
+
+.box-outlined {
+  box-shadow: 0 0 .125rem .125rem black;
 }

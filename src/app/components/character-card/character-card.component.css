@@ -29,9 +29,6 @@
   position: absolute;
   inset: .3rem .3rem auto auto;
   font-size: 1.3rem;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  -webkit-background-clip: text;
 }
 
 .icon {
@@ -60,25 +57,10 @@
   & .hp,
   & .cp {
     font-size: 1.1rem;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    -webkit-background-clip: text;
-  }
-
-  & .hp {
-    background: linear-gradient(#ccffcc -80%, white 100%) text;
-  }
-
-  & .cp {
-    background: linear-gradient(red -80%, white 100%) text;
   }
 
   & .value {
     text-align: right;
     font-size: 1.3rem;
-    -webkit-text-fill-color: transparent;
-    background: linear-gradient(white 50%, gray 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
   }
 }
