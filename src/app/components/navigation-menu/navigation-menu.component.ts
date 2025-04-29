@@ -1,5 +1,5 @@
 import { NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CursorComponent } from '../cursor/cursor.component';
 import { HelpHeaderService } from '../../services/help-header.service';
@@ -17,13 +17,17 @@ interface NavigationMenuItem {
   templateUrl: './navigation-menu.component.html',
   styleUrl: './navigation-menu.component.css'
 })
-export class NavigationMenuComponent {
+export class NavigationMenuComponent implements OnDestroy {
   @Input({ required: true }) title!: string;
   @Input({ required: true }) items!: NavigationMenuItem[];
   cursorY = 0;
   isCursorVisible = false;
 
   constructor(private helpHeaderService: HelpHeaderService) {}
+
+  ngOnDestroy() {
+    this.helpHeaderService.setText(null);
+  }
 
   setHelpHeaderText(text: string) {
     this.helpHeaderService.setText(text);

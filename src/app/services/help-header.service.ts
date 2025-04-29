@@ -5,10 +5,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class HelpHeaderService {
-  textSubject = new BehaviorSubject<string>('');
+  textSubject = new BehaviorSubject<string | null>(null);
   text$ = this.textSubject.asObservable();
 
-  setText(text: string) {
+  setText(text: string | null) {
     this.textSubject.next(text);
   }
 }

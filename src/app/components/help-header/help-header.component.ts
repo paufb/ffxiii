@@ -8,9 +8,9 @@ import { HelpHeaderService } from '../../services/help-header.service';
   styleUrl: './help-header.component.css'
 })
 export class HelpHeaderComponent {
-  text!: string;
+  text!: string | null;
 
   constructor(private helpHeaderService: HelpHeaderService) {
-    this.helpHeaderService.text$.subscribe(text => this.text = text);
+    this.helpHeaderService.text$.subscribe((text) => this.text = text);
   }
 }
