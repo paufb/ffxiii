@@ -39,6 +39,7 @@ tbody tr {
     box-sizing: border-box;
     border-top: .0625rem solid white;
     border-bottom: .0625rem solid black;
+    cursor: pointer;
 
     &:is(.selected) > app-cursor {
       display: block;
@@ -60,7 +61,6 @@ tbody tr {
       background-size: cover;
       padding: 0 1.75rem 0 .3rem;
       white-space: nowrap;
-      cursor: pointer;
     }
 
     &::before,

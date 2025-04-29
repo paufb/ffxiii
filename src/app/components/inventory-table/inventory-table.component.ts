@@ -40,11 +40,12 @@ export class InventoryTableComponent implements OnDestroy {
   setSelectedEntry(entry: typeof this.entries[number]) {
     this.selectedEntry = entry;
     this.hideCursor();
+    this.setHelpHeaderText(entry);
     if (entry instanceof Weapon)
       this.partyHighlighterService.setHighlightedCharacter(entry.character);
   }
 
-  setHelpHeaderText(entry: typeof this.entries[number]) {
+  private setHelpHeaderText(entry: typeof this.entries[number]) {
     let text = null;
     if (entry instanceof Item) {
       text = entry.effect;

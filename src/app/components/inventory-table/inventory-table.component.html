@@ -13,15 +13,13 @@
       <th>{{ columnTitle }}</th>
     </tr>
   </thead>
-  <tbody>
+  <tbody (mouseleave)="hideCursor()">
     @for (entryPair of getEntryPairs(); track $index; let yIndex = $index) {
       <tr>
         @for (entry of entryPair; track $index; let xIndex = $index) {
           <td
             (click)="setSelectedEntry(entry)"
-            (click)="setHelpHeaderText(entry)"
             (mouseenter)="moveCursor($event, xIndex, yIndex)"
-            (mouseleave)="hideCursor()"
             [class.selected]="selectedEntry === entry"
           >
             <app-cursor glide />
@@ -29,7 +27,11 @@
               {{ entry.name }}
             </div>
           </td>
-          <td>
+          <td
+            (click)="setSelectedEntry(entry)"
+            (mouseenter)="moveCursor($event, xIndex, yIndex)"
+            [class.selected]="selectedEntry === entry"
+          >
             @if (entry | isInstanceOf:Item) {
               {{ entryAs(entry, Item).quantity.toString().padStart(2, '0') }}
             } @else if (entry | isInstanceOf:Weapon) {
