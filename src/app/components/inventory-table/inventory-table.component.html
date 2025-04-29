@@ -14,12 +14,12 @@
     </tr>
   </thead>
   <tbody>
-    @for (entryPair of getPairs(entries); track $index; let yIndex = $index) {
+    @for (entryPair of getEntryPairs(); track $index; let yIndex = $index) {
       <tr>
         @for (entry of entryPair; track $index; let xIndex = $index) {
           <td
             (click)="setSelectedEntry(entry)"
-            (click)="setHelpHeaderText(entry.helpHeaderText)"
+            (click)="setHelpHeaderText(entry)"
             (mouseenter)="moveCursor($event, xIndex, yIndex)"
             (mouseleave)="hideCursor()"
             [class.selected]="selectedEntry === entry"
@@ -30,16 +30,15 @@
             </div>
           </td>
           <td>
-            <ng-container *ngIf="typeof entry.value === 'number'; else checkmark">
-              {{ entry.value.toString().padStart(2, '0') }}
-            </ng-container>
-            <ng-template #checkmark>
-              <div *ngIf="entry.value" [style.display]="'flex'">
+            @if (entry | isInstanceOf:Item) {
+              {{ entryAs(entry, Item).quantity.toString().padStart(2, '0') }}
+            } @else if (entry | isInstanceOf:Weapon) {
+              <div *ngIf="entryAs(entry, Weapon).isEquipped" [style.display]="'flex'">
                 <svg width="24" height="24" viewBox="0 0 24 24">
                   <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" fill="white" />
                 </svg>
               </div>
-            </ng-template>
+            }
           </td>
         }
       </tr>

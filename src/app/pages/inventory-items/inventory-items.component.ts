@@ -10,9 +10,5 @@ import { items } from '../../constants/items';
   styleUrl: './inventory-items.component.css'
 })
 export class InventoryItemsComponent {
-  inventoryTableEntries = Object.values(items).map((item) => ({
-    name: item.name,
-    value: item.quantity,
-    helpHeaderText: item.effect
-  }));
+  inventoryTableEntries = Object.values(items);
 }

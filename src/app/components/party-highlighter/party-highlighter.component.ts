@@ -1,7 +1,8 @@
 import { NgClass, NgOptimizedImage } from '@angular/common';
-import { Component, Input } from '@angular/core';
-import { Character } from '../../models/character.model';
+import { Component } from '@angular/core';
 import { characters } from '../../constants/characters';
+import { Character } from '../../models/character.model';
+import { PartyHighlighterService } from '../../services/party-highlighter.service';
 
 @Component({
   selector: 'app-party-highlighter',
@@ -10,6 +11,10 @@ import { characters } from '../../constants/characters';
   styleUrl: './party-highlighter.component.css'
 })
 export class PartyHighlighterComponent {
-  @Input() highlightedCharacter: Character | null = null;
   characters = Object.values(characters);
+  highlightedCharacter!: Character | null;
+  
+  constructor(private partyHighlighterService: PartyHighlighterService) {
+    this.partyHighlighterService.$highlightedCharacter.subscribe((character) => this.highlightedCharacter = character);
+  }
 }

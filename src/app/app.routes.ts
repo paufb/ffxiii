@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { MainMenuComponent } from './pages/main-menu/main-menu.component';
 import { InventoryComponent } from './pages/inventory/inventory.component';
 import { InventoryItemsComponent } from './pages/inventory-items/inventory-items.component';
+import { InventoryWeaponsComponent } from './pages/inventory-weapons/inventory-weapons.component';
 
 export const routes: Routes = [
   { path: '', component: MainMenuComponent },
@@ -9,7 +10,8 @@ export const routes: Routes = [
     component: InventoryComponent,
     children: [
       { path: '', redirectTo: 'items', pathMatch: 'full' },
-      { path: 'items', component: InventoryItemsComponent }
+      { path: 'items', component: InventoryItemsComponent },
+      { path: 'weapons', component: InventoryWeaponsComponent }
     ]
   },
 ];
