@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavigationMenuComponent } from '../../components/navigation-menu/navigation-menu.component';
+import { PartyHighlighterComponent } from '../../components/party-highlighter/party-highlighter.component';
+import { TitleRulerComponent } from "../../components/title-ruler/title-ruler.component";
 
 @Component({
   selector: 'app-inventory',
-  imports: [RouterOutlet, NavigationMenuComponent],
+  imports: [NavigationMenuComponent, PartyHighlighterComponent, RouterOutlet, TitleRulerComponent],
   templateUrl: './inventory.component.html',
   styleUrl: './inventory.component.css'
 })

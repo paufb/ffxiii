@@ -1,0 +1,14 @@
+<div>
+  @for (character of characters; track $index) {
+    <div [ngClass]="['container', character.name.toLowerCase()]">
+      <img
+        [class.inactive]="highlightedCharacter !== character"
+        [ngSrc]="character.assets.card.url"
+        priority
+        [width]="character.assets.card.width"
+        [height]="character.assets.card.height"
+        [alt]="character.name"
+      />
+    </div>
+  }
+</div>
