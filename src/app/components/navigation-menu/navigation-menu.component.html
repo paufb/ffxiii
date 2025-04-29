@@ -6,7 +6,12 @@
         (mouseenter)="moveCursor($event, $index)"
         (mouseenter)="setHelpHeaderText(item.helpHeaderText)"
       >
-        <a [routerLink]="item.url" routerLinkActive="active" ariaCurrentWhenActive="page">
+        <a
+          [routerLink]="item.url"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          (click)="hideCursor()"
+        >
           <app-cursor glide />
           <span class="text-outlined">{{ item.title }}</span>
         </a>
