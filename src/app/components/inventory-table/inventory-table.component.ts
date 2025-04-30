@@ -1,6 +1,7 @@
 import { NgIf } from '@angular/common';
 import { Component, Input, OnDestroy } from '@angular/core';
 import { CursorComponent } from '../cursor/cursor.component';
+import { Accessory } from '../../models/accessory.model';
 import { Item } from '../../models/item.model';
 import { Weapon } from '../../models/weapon.model';
 import { IsInstanceOfPipe } from '../../pipes/is-instance-of.pipe';
@@ -15,7 +16,7 @@ import { PartyHighlighterService } from '../../services/party-highlighter.servic
 })
 export class InventoryTableComponent implements OnDestroy {
   @Input({ required: true }) columnTitle!: 'Quantity' | 'Equipped';
-  @Input({ required: true }) entries!: (Item | Weapon)[];
+  @Input({ required: true }) entries!: (Item | Weapon | Accessory)[];
   Item = Item;
   Weapon = Weapon;
   selectedEntry!: typeof this.entries[number];
@@ -51,6 +52,8 @@ export class InventoryTableComponent implements OnDestroy {
       text = entry.effect;
     } else if (entry instanceof Weapon) {
       text = entry.description;
+    } else if (entry instanceof Accessory) {
+      text = entry.effect;
     }
     this.helpHeaderService.setText(text);
   }
