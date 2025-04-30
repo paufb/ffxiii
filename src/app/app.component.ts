@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HelpHeaderComponent } from "./components/help-header/help-header.component";
+import { FooterComponent } from './components/footer/footer.component';
+import { HelpHeaderComponent } from './components/help-header/help-header.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HelpHeaderComponent],
+  imports: [FooterComponent, HelpHeaderComponent, RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

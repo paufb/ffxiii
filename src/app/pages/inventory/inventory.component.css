@@ -9,6 +9,12 @@
   }
 }
 
+app-navigation-menu {
+  position: sticky;
+  top: 0;
+  height: min-content;
+}
+
 app-title-ruler {
   display: block;
   margin-bottom: .25rem;
