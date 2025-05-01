@@ -1,4 +1,4 @@
-.card {
+:host {
   position: relative;
   height: 33rem;
   border: .0625rem solid white;

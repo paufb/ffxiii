@@ -1,4 +1,4 @@
-import { NgClass, NgOptimizedImage } from '@angular/common';
+import { NgOptimizedImage } from '@angular/common';
 import { Component } from '@angular/core';
 import { characters } from '../../constants/characters';
 import { Character } from '../../models/character.model';
@@ -6,7 +6,7 @@ import { PartyHighlighterService } from '../../services/party-highlighter.servic
 
 @Component({
   selector: 'app-party-highlighter',
-  imports: [NgClass, NgOptimizedImage],
+  imports: [NgOptimizedImage],
   templateUrl: './party-highlighter.component.html',
   styleUrl: './party-highlighter.component.css'
 })

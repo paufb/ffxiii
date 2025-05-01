@@ -1,56 +1,56 @@
-div {
+:host {
   display: flex;
   justify-content: center;
   height: 3rem;
   background: linear-gradient(to left, black, transparent);
+}
 
-  & > .container {
-    --container-transform: none;
-    --img-transform: none;
-    position: relative;
-    width: 7rem;
-    height: 100%;
-    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
-    background: black;
-    contain: paint;
-    transform: var(--container-transform);
+div {
+  --container-transform: none;
+  --img-transform: none;
+  position: relative;
+  width: 7rem;
+  height: 100%;
+  clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+  background: black;
+  contain: paint;
+  transform: var(--container-transform);
 
-    & img {
-      transform: var(--img-transform);
+  & img {
+    transform: var(--img-transform);
 
-      &.inactive {
-        filter: grayscale(.7) brightness(.75)
-      }
+    &.inactive {
+      filter: grayscale(.7) brightness(.75)
     }
+  }
 
-    &.lightning {
-      --container-transform: translate(30px);
-      --img-transform: scale(.85) translate(5.4%, -15.5%);
-    }
+  &.lightning {
+    --container-transform: translate(30px);
+    --img-transform: scale(.85) translate(-45.25%, -15.5%);
+  }
 
-    &.vanille {
-      --container-transform: translate(18px);
-      --img-transform: scale(.85) translate(-9%, -16.75%);
-    }
+  &.vanille {
+    --container-transform: translate(18px);
+    --img-transform: scale(.85) translate(-61.1%, -16.75%);
+  }
 
-    &.fang {
-      --container-transform: translate(6px);
-      --img-transform: scale(-.8, .8) rotate(18deg) translate(-26.75%, -33%);
-    }
+  &.fang {
+    --container-transform: translate(6px);
+    --img-transform: scale(-.8, .8) rotate(18deg) translate(28.5%, -50.5%);
+  }
 
-    &.snow {
-      --container-transform: translate(-6px);
-      --img-transform: scale(.75) translate(-6.5%, -22.8%);
-    }
+  &.snow {
+    --container-transform: translate(-6px);
+    --img-transform: scale(.75) translate(-67.2%, -22.8%);
+  }
 
-    &.sazh {
-      --container-transform: translate(-18px);
-      --img-transform: scale(.8) translate(11.75%, -19%);
-    }
+  &.sazh {
+    --container-transform: translate(-18px);
+    --img-transform: scale(.8) translate(-41%, -19%);
+  }
 
-    &.hope {
-      --container-transform: translate(-30px);
-      --img-transform: scale(.7) translate(4.5%, -35.5%);
-    }
+  &.hope {
+    --container-transform: translate(-30px);
+    --img-transform: scale(.7) translate(-59%, -35.5%);
   }
 }

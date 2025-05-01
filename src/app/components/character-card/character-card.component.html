@@ -1,47 +1,45 @@
-<div class="card">
-  <img
-    [ngClass]="['background', character.name.toLowerCase(), character.isInParty ? '' : 'inactive']"
-    [ngSrc]="character.assets.card.url"
-    priority
-    [width]="character.assets.card.width"
-    [height]="character.assets.card.height"
-    [alt]="character.name"
+<img
+  [ngClass]="['background', character.name.toLowerCase(), character.isInParty ? '' : 'inactive']"
+  [ngSrc]="character.assets.card.url"
+  priority
+  [width]="character.assets.card.width"
+  [height]="character.assets.card.height"
+  [alt]="character.name"
+/>
+@if (character.isInParty) {
+  <app-outlined-gradient-text
+    class="role"
+    [text]="character.role.name.slice(0, 3)"
+    [colors]="[`${character.role.color} -80%`, 'white 100%']"
   />
-  @if (character.isInParty) {
-    <app-outlined-gradient-text
-      class="role"
-      [text]="character.role.name.slice(0, 3)"
-      [colors]="[`${character.role.color} -80%`, 'white 100%']"
-    />
-    <img
-      [ngClass]="['icon', character.isPartyLeader ? '' : 'member']"
-      src="assets/icons/Leader-ffxiii-icon.png"
-      [alt]="character.isPartyLeader ? 'Leader' : 'Member'"
-    />
-    <span class="status text-outlined">
-      {{ character.isPartyLeader ? 'Leader' : 'Member' }}
-    </span>
-  }
-  <div class="stats">
-    <app-outlined-gradient-text
-      class="hp"
-      text="HP"
-      [colors]="['#ccffcc -80%', 'white 100%']"
-    />
-    <app-outlined-gradient-text
-      class="value"
-      [text]="character.healthPoints.toString()"
-      [colors]="['white 50%', 'gray 100%']"
-    />
-    <app-outlined-gradient-text
-      class="cp"
-      text="CP"
-      [colors]="['red -80%', 'white 100%']"
-    />
-    <app-outlined-gradient-text
-      class="value"
-      [text]="character.crystogenPoints.toString()"
-      [colors]="['white 50%', 'gray 100%']"
-    />
-  </div>
+  <img
+    [ngClass]="['icon', character.isPartyLeader ? '' : 'member']"
+    src="assets/icons/Leader-ffxiii-icon.png"
+    [alt]="character.isPartyLeader ? 'Leader' : 'Member'"
+  />
+  <span class="status text-outlined">
+    {{ character.isPartyLeader ? 'Leader' : 'Member' }}
+  </span>
+}
+<div class="stats">
+  <app-outlined-gradient-text
+    class="hp"
+    text="HP"
+    [colors]="['#ccffcc -80%', 'white 100%']"
+  />
+  <app-outlined-gradient-text
+    class="value"
+    [text]="character.healthPoints.toString()"
+    [colors]="['white 50%', 'gray 100%']"
+  />
+  <app-outlined-gradient-text
+    class="cp"
+    text="CP"
+    [colors]="['red -80%', 'white 100%']"
+  />
+  <app-outlined-gradient-text
+    class="value"
+    [text]="character.crystogenPoints.toString()"
+    [colors]="['white 50%', 'gray 100%']"
+  />
 </div>
