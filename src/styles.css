@@ -13,6 +13,10 @@
   src: local('Two Weekends Sans'), url(assets/fonts/twoweekendssans-regular.otf) format('opentype');
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   margin: 0;
   background: radial-gradient(ellipse at bottom,#fff,#969696) no-repeat center center fixed;

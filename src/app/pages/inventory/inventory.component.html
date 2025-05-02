@@ -1,10 +1,12 @@
 <app-navigation-menu [title]="title" [items]="navigationMenuItems" />
 <div>
-  <section>
-    <app-title-ruler title="Party" align="start" />
-    <app-party-highlighter />
-  </section>
-  <section>
-    <router-outlet />
-  </section>
+  <div class="animatable">
+    <section>
+      <app-title-ruler title="Party" align="start" />
+      <app-party-highlighter />
+    </section>
+    <section>
+      <router-outlet />
+    </section>
+  </div>
 </div>

@@ -1,8 +1,12 @@
-div {
+div:first-child {
   font-weight: bold;
   color: white;
   position: relative;
   z-index: 1;
+}
+
+div:last-child {
+  padding: 0 .125rem;
 }
 
 hr {

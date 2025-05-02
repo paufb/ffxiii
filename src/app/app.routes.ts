@@ -6,7 +6,7 @@ import { InventoryItemsComponent } from './pages/inventory-items/inventory-items
 import { InventoryWeaponsComponent } from './pages/inventory-weapons/inventory-weapons.component';
 
 export const routes: Routes = [
-  { path: '', component: MainMenuComponent },
+  { path: '', component: MainMenuComponent, data: { animation: 'MainMenuPage' } },
   { path: 'inventory',
     component: InventoryComponent,
     children: [
@@ -14,6 +14,8 @@ export const routes: Routes = [
       { path: 'items', component: InventoryItemsComponent },
       { path: 'weapons', component: InventoryWeaponsComponent },
       { path: 'accessories', component: InventoryAccessoriesComponent }
-    ]
+    ],
+    data: { animation: 'InventoryPage' }
   },
+  { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

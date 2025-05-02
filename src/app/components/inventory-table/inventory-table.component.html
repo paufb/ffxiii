@@ -51,10 +51,10 @@
       </tr>
     }
   </tbody>
-  <app-cursor
-    *ngIf="isCursorVisible"
-    selection
-    [style.left.px]="cursorX"
-    [style.top.px]="cursorY"
-  />
 </table>
+<app-cursor
+  *ngIf="isCursorVisible"
+  selection
+  [style.left.px]="cursorX"
+  [style.top.px]="cursorY"
+/>

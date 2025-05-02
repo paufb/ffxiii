@@ -1,6 +1,13 @@
 :host {
   display: flex;
   gap: .5rem;
+  padding: 1rem 0;
+}
+
+.animatable {
+  display: flex;
+  gap: .5rem;
+  flex-grow: 1;
 }
 
 app-character-card {

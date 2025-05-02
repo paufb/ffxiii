@@ -1,7 +1,7 @@
 <main>
   <app-help-header />
-  <div>
-    <router-outlet />
+  <div [@routeAnimations]="getRouteAnimationData(outlet)">
+    <router-outlet #outlet="outlet" />
   </div>
   <app-footer />
 </main>
