@@ -13,6 +13,11 @@
   src: local('Two Weekends Sans'), url(assets/fonts/twoweekendssans-regular.otf) format('opentype');
 }
 
+:root {
+  --app-max-width: 90rem;
+  --app-padding: .5rem;
+}
+
 html {
   scrollbar-gutter: stable;
 }

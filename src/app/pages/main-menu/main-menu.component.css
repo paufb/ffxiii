@@ -1,15 +1,27 @@
 :host {
   display: flex;
-  gap: .5rem;
-  padding: 1rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-content: flex-start;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  padding: 1rem var(--app-padding);
 }
 
 .animatable {
   display: flex;
   gap: .5rem;
   flex-grow: 1;
+  overflow: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0 .75rem .75rem 0;
 }
 
 app-character-card {
+  scroll-snap-align: center;
   flex-grow: 1;
+  min-width: 10rem;
+  min-height: 33rem;
 }

@@ -1,6 +1,5 @@
 :host {
   position: relative;
-  height: 33rem;
   border: .0625rem solid white;
   border-radius: .5rem;
   box-shadow: .5rem .5rem .3125rem #00000099;
@@ -17,7 +16,7 @@
   &.vanille { --transformations: scale(1.2) translate(-43.25%, 7%); }
   &.fang { --transformations: scale(1.1) rotate(15deg) translate(-57%, 1%); }
   &.snow { --transformations: translate(-49%, 1%); }
-  &.sazh { --transformations: translate(-25.5%, 0.5%); }
+  &.sazh { --transformations: translate(-25.5%, .5%); }
   &.hope { --transformations: translate(-37%, -1%); }
 
   &.inactive {

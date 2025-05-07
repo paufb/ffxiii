@@ -68,8 +68,9 @@ export class InventoryTableComponent implements OnDestroy {
       this.hideCursor();
       return;
     }
-    this.cursorX = xCellIndex * 512;
-    this.cursorY = (yCellIndex + 1) * 36;
+    const tableRowElement = tableCellElement.parentElement as HTMLTableRowElement;
+    this.cursorX = xCellIndex * (tableRowElement.offsetWidth / 2);
+    this.cursorY = (yCellIndex + 1) * tableRowElement.offsetHeight;
     this.isCursorVisible = true;
   }
 

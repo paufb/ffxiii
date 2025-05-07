@@ -9,8 +9,3 @@ app-title-ruler {
   display: block;
   margin-bottom: .25rem;
 }
-
-app-inventory-table {
-  flex-grow: 1;
-  height: 0;
-}

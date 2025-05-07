@@ -1,5 +1,6 @@
 footer {
-  height: 5rem;
+  min-height: 2rem;
+  height: 5dvh;
 }
 
 hr {
@@ -15,7 +16,10 @@ div {
   display: flex;
   align-items: flex-end;
   gap: .75rem;
-  padding: 0 8.85%;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  padding: 0 var(--app-padding);
+  text-wrap: nowrap;
 }
 
 span {
