@@ -5,7 +5,7 @@
   overflow: hidden;
 }
 
-app-help-header {
+app-header {
   min-height: 2rem;
   height: var(--app-header-height);
 }
