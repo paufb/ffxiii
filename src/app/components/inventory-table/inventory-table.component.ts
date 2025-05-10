@@ -1,52 +1,52 @@
-import { NgIf } from '@angular/common';
-import { Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, OnDestroy, signal } from '@angular/core';
 import { CursorComponent } from '../cursor/cursor.component';
 import { Accessory } from '../../models/accessory.model';
 import { Item } from '../../models/item.model';
 import { Weapon } from '../../models/weapon.model';
 import { IsInstanceOfPipe } from '../../pipes/is-instance-of.pipe';
-import { HelpHeaderService } from '../../services/help-header.service';
+import { HeaderService } from '../../services/header.service';
 import { PartyHighlighterService } from '../../services/party-highlighter.service';
+
+type Entry = Item | Weapon | Accessory;
 
 @Component({
   selector: 'app-inventory-table',
-  imports: [CursorComponent, IsInstanceOfPipe, NgIf],
+  imports: [CursorComponent, IsInstanceOfPipe],
   templateUrl: './inventory-table.component.html',
-  styleUrl: './inventory-table.component.css'
+  styleUrl: './inventory-table.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InventoryTableComponent implements OnDestroy {
-  @Input({ required: true }) columnTitle!: 'Quantity' | 'Equipped';
-  @Input({ required: true }) entries!: (Item | Weapon | Accessory)[];
-  Item = Item;
-  Weapon = Weapon;
-  selectedEntry!: typeof this.entries[number];
-  cursorX = 0;
-  cursorY = 0;
-  isCursorVisible = false;
+  columnTitle = input.required<'Quantity' | 'Equipped'>();
+  entries = input.required<Entry[]>();
+  protected readonly Item = Item;
+  protected readonly Weapon = Weapon;
+  protected readonly selectedEntry = signal<Entry | null>(null);
+  protected readonly cursorX = signal(0);
+  protected readonly cursorY = signal(0);
+  protected readonly isCursorVisible = signal(false);
+  private readonly headerService = inject(HeaderService);
+  private readonly partyHighlighterService = inject(PartyHighlighterService);
 
-  constructor(private helpHeaderService: HelpHeaderService, private partyHighlighterService: PartyHighlighterService) {}
+  protected entryPairs = computed(() => this.entries().reduce((acc, curr, index) => {
+    if (index % 2 === 0)
+      acc.push([curr, this.entries()[index + 1]]);
+    return acc;
+  }, [] as Entry[][]));
 
   ngOnDestroy() {
     this.partyHighlighterService.setHighlightedCharacter(null);
   }
 
-  getEntryPairs() {
-    const pairs = [];
-    for (let i = 0; i < this.entries.length; i += 2) {
-      pairs.push([this.entries[i], this.entries[i + 1]]);
-    }
-    return pairs;
-  }
-
-  setSelectedEntry(entry: typeof this.entries[number]) {
-    this.selectedEntry = entry;
+  protected setSelectedEntry(entry: Entry) {
+    this.selectedEntry.set(entry);
     this.hideCursor();
-    this.setHelpHeaderText(entry);
+    this.setHeaderText(entry);
     if (entry instanceof Weapon)
       this.partyHighlighterService.setHighlightedCharacter(entry.character);
   }
 
-  private setHelpHeaderText(entry: typeof this.entries[number]) {
+  private setHeaderText(entry: Entry) {
     let text = null;
     if (entry instanceof Item) {
       text = entry.effect;
@@ -55,10 +55,10 @@ export class InventoryTableComponent implements OnDestroy {
     } else if (entry instanceof Accessory) {
       text = entry.effect;
     }
-    this.helpHeaderService.setText(text);
+    this.headerService.setText(text);
   }
 
-  entryAs<T>(entry: typeof this.entries[number], target: new (...args: any[]) => T) {
+  entryAs<T>(entry: Entry, target: new (...args: any[]) => T) {
     return entry as T;
   }
 
@@ -69,12 +69,12 @@ export class InventoryTableComponent implements OnDestroy {
       return;
     }
     const tableRowElement = tableCellElement.parentElement as HTMLTableRowElement;
-    this.cursorX = xCellIndex * (tableRowElement.offsetWidth / 2);
-    this.cursorY = (yCellIndex + 1) * tableRowElement.offsetHeight;
-    this.isCursorVisible = true;
+    this.cursorX.set(xCellIndex * (tableRowElement.offsetWidth / 2));
+    this.cursorY.set((yCellIndex + 1) * tableRowElement.offsetHeight);
+    this.isCursorVisible.set(true);
   }
 
   hideCursor() {
-    this.isCursorVisible = false;
+    this.isCursorVisible.set(false);
   }
 }

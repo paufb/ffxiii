@@ -1,8 +1,7 @@
-import { NgIf } from '@angular/common';
-import { Component, Input, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnDestroy, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CursorComponent } from '../cursor/cursor.component';
-import { HelpHeaderService } from '../../services/help-header.service';
+import { HeaderService } from '../../services/header.service';
 import { TitleRulerComponent } from '../title-ruler/title-ruler.component';
 
 interface NavigationMenuItem {
@@ -13,37 +12,37 @@ interface NavigationMenuItem {
 
 @Component({
   selector: 'app-navigation-menu',
-  imports: [CursorComponent, NgIf, RouterLink, RouterLinkActive, TitleRulerComponent],
+  imports: [CursorComponent, RouterLink, RouterLinkActive, TitleRulerComponent],
   templateUrl: './navigation-menu.component.html',
-  styleUrl: './navigation-menu.component.css'
+  styleUrl: './navigation-menu.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavigationMenuComponent implements OnDestroy {
-  @Input({ required: true }) title!: string;
-  @Input({ required: true }) items!: NavigationMenuItem[];
-  cursorY = 0;
-  isCursorVisible = false;
-
-  constructor(private helpHeaderService: HelpHeaderService) {}
+  title = input.required<string>();
+  items = input.required<NavigationMenuItem[]>();
+  protected readonly cursorY = signal(0);
+  protected readonly isCursorVisible = signal(false);
+  private readonly headerService = inject(HeaderService);
 
   ngOnDestroy() {
-    this.helpHeaderService.setText(null);
+    this.headerService.setText(null);
   }
 
-  setHelpHeaderText(text: string) {
-    this.helpHeaderService.setText(text);
+  protected setHelpHeaderText(text: string) {
+    this.headerService.setText(text);
   }
 
-  moveCursor(event: MouseEvent, listItemIndex: number) {
+  protected moveCursor(event: MouseEvent, listItemIndex: number) {
     const listItem = event.currentTarget as HTMLLIElement;
     if (listItem.querySelector('a')?.classList.contains('active')) {
       this.hideCursor();
       return;
     }
-    this.cursorY = (listItemIndex + 1) * 32;
-    this.isCursorVisible = true;
+    this.cursorY.set((listItemIndex + 1) * 32);
+    this.isCursorVisible.set(true);
   }
 
-  hideCursor() {
-    this.isCursorVisible = false;
+  protected hideCursor() {
+    this.isCursorVisible.set(false);
   }
 }
