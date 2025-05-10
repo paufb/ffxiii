@@ -1,7 +1,7 @@
 @for (character of characters; track $index) {
   <div [class]="character.name.toLowerCase()">
     <img
-      [class.inactive]="highlightedCharacter !== character"
+      [class.inactive]="highlightedCharacter() !== character"
       [ngSrc]="character.assets.card.url"
       priority
       [width]="character.assets.card.width"
