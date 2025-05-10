@@ -12,7 +12,7 @@
           ariaCurrentWhenActive="page"
           (click)="hideCursor()"
         >
-          <app-cursor glide />
+          <app-cursor [glide]="true" />
           <span class="text-outlined">{{ item.title }}</span>
         </a>
       </li>
@@ -20,7 +20,7 @@
   </ul>
   @if (isCursorVisible()) {
     <app-cursor
-      selection
+      [selection]="true"
       [style.top.px]="cursorY()"
     />
   }

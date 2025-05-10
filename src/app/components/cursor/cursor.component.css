@@ -3,12 +3,10 @@
   to { transform: translateX(0); }
 }
 
-div {
+:host {
   position: relative;
-  width: fit-content;
-  height: fit-content;
 
-  &:is(.glide) {
+  &.glide {
     animation: glide .4s infinite alternate;
   }
 
@@ -33,7 +31,7 @@ div {
 img {
   opacity: .5;
 
-  &:is(.selection) {
+  &.selection {
     opacity: 1;
   }
 }

@@ -46,16 +46,10 @@ td {
   border-bottom: .0625rem solid black;
   cursor: pointer;
 
-  &:is(.selected) > app-cursor {
-    display: block;
-  }
-
   & > app-cursor {
     position: absolute;
-    transform: translate(-73%, -10%);
-    pointer-events: none;
+    inset: .375rem auto auto -2rem;
     z-index: 1;
-    display: none;
   }
 
   &:nth-child(even) {

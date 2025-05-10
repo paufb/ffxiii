@@ -17,7 +17,9 @@
               (mouseenter)="moveCursor($event, xIndex, yIndex)"
               [class.selected]="selectedEntry() === entry"
             >
-              <app-cursor glide />
+              @if (selectedEntry() === entry) {
+                <app-cursor [glide]="true" />
+              }
               <div>
                 {{ entry.name }}
               </div>
@@ -48,7 +50,7 @@
 </table>
 @if (isCursorVisible()) {
   <app-cursor
-    selection
+    [selection]="true"
     [style.left.px]="cursorX()"
     [style.top.px]="cursorY()"
   />

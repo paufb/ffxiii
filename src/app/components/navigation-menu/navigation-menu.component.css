@@ -49,13 +49,13 @@ a {
   width: 100%;
   height: 100%;
 
-  &:is(.active) > app-cursor {
+  &.active > app-cursor {
     display: block;
   }
 
   & > app-cursor {
     position: absolute;
-    transform: translate(140%, 27%);
+    inset: .55rem auto auto 4.7rem;
     pointer-events: none;
     z-index: 1;
     display: none;
