@@ -16,10 +16,8 @@
 :root {
   --app-max-width: 90rem;
   --app-padding: .5rem;
-}
-
-html {
-  scrollbar-gutter: stable;
+  --app-header-height: 5dvh;
+  --app-footer-height: 5dvh;
 }
 
 body {
