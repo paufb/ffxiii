@@ -3,12 +3,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CursorComponent } from '../cursor/cursor.component';
 import { HeaderService } from '../../services/header.service';
 import { TitleRulerComponent } from '../title-ruler/title-ruler.component';
-
-interface NavigationMenuItem {
-  title: string;
-  url: string;
-  helpHeaderText: string;
-}
+import { NavigationMenuItem } from '../../models/navigation-menu-item.interface';
 
 @Component({
   selector: 'app-navigation-menu',
@@ -28,7 +23,7 @@ export class NavigationMenuComponent implements OnDestroy {
     this.headerService.setText(null);
   }
 
-  protected setHelpHeaderText(text: string) {
+  protected setHeaderText(text: string) {
     this.headerService.setText(text);
   }
 

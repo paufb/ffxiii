@@ -4,7 +4,7 @@
     @for (item of items(); track $index) {
       <li
         (mouseenter)="moveCursor($event, $index)"
-        (mouseenter)="setHelpHeaderText(item.helpHeaderText)"
+        (mouseenter)="setHeaderText(item.headerText)"
       >
         <a
           [routerLink]="item.url"
