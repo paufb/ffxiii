@@ -1,4 +1,4 @@
-<app-navigation-menu [title]="title" [items]="navigationMenuItems" />
+<app-navigation-menu title="Main Menu" [items]="navigationMenuItems" />
 <div class="animatable">
   @for (character of characters; track character.name) {
     <app-character-card [character]="character" />

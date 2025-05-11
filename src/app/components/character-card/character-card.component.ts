@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Character } from '../../models/character.model';
 import { OutlinedGradientTextComponent } from '../outlined-gradient-text/outlined-gradient-text.component';
@@ -7,8 +7,9 @@ import { OutlinedGradientTextComponent } from '../outlined-gradient-text/outline
   selector: 'app-character-card',
   imports: [CommonModule, NgOptimizedImage, OutlinedGradientTextComponent],
   templateUrl: './character-card.component.html',
-  styleUrl: './character-card.component.css'
+  styleUrl: './character-card.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CharacterCardComponent {
-  @Input({ required: true }) character!: Character;
+  character = input.required<Character>();
 }

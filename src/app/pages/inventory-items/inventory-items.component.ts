@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { TitleRulerComponent } from '../../components/title-ruler/title-ruler.component';
 import { InventoryTableComponent } from '../../components/inventory-table/inventory-table.component';
 import { items } from '../../constants/items';
@@ -7,8 +7,9 @@ import { items } from '../../constants/items';
   selector: 'app-inventory-items',
   imports: [TitleRulerComponent, InventoryTableComponent],
   templateUrl: './inventory-items.component.html',
-  styleUrl: './inventory-items.component.css'
+  styleUrl: './inventory-items.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class InventoryItemsComponent {
-  inventoryTableEntries = Object.values(items);
+  protected readonly inventoryTableEntries = Object.values(items);
 }

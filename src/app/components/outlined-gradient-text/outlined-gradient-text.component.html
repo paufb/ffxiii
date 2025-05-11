@@ -1,6 +1,6 @@
 <span class="text-outlined">
-  {{ text }}
+  {{ text() }}
 </span>
-<span [style.background]="`linear-gradient(${colors.join(',')}) text`">
-  {{ text }}
+<span [style.background]="`linear-gradient(${colors().join(',')}) text`">
+  {{ text() }}
 </span>
