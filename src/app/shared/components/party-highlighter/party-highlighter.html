@@ -1,0 +1,11 @@
+@for (character of characters; track $index) {
+  <div [class]="character.name.toLowerCase()">
+    <img
+      [class.inactive]="highlightedCharacter() !== character"
+      [src]="character.assets.card.url"
+      [width]="character.assets.card.width"
+      [height]="character.assets.card.height"
+      [alt]="character.name"
+    />
+  </div>
+}

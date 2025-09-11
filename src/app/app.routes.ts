@@ -1,21 +1,16 @@
 import { Routes } from '@angular/router';
-import { MainMenuComponent } from './pages/main-menu/main-menu.component';
-import { InventoryComponent } from './pages/inventory/inventory.component';
-import { InventoryAccessoriesComponent } from './pages/inventory-accessories/inventory-accessories.component';
-import { InventoryItemsComponent } from './pages/inventory-items/inventory-items.component';
-import { InventoryWeaponsComponent } from './pages/inventory-weapons/inventory-weapons.component';
 
 export const routes: Routes = [
-  { path: '', component: MainMenuComponent, data: { animation: 'MainMenuPage' } },
-  { path: 'inventory',
-    component: InventoryComponent,
+  { path: '', loadComponent: () => import('@/features/home/home').then(m => m.Home) },
+  {
+    path: 'inventory',
+    loadComponent: () => import('@/features/inventory/inventory').then(m => m.Inventory),
     children: [
       { path: '', redirectTo: 'items', pathMatch: 'full' },
-      { path: 'items', component: InventoryItemsComponent },
-      { path: 'weapons', component: InventoryWeaponsComponent },
-      { path: 'accessories', component: InventoryAccessoriesComponent }
-    ],
-    data: { animation: 'InventoryPage' }
+      { path: 'items', loadComponent: () => import('@/features/inventory/items/items').then(m => m.Items) },
+      { path: 'weapons', loadComponent: () => import('@/features/inventory/weapons/weapons').then(m => m.Weapons) },
+      { path: 'accessories', loadComponent: () => import('@/features/inventory/accessories/accessories').then(m => m.Accessories) }
+    ]
   },
   { path: '**', redirectTo: '', pathMatch: 'full' }
 ];

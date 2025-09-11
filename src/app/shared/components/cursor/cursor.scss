@@ -1,0 +1,37 @@
+@keyframes glide {
+  from { transform: translateX(-.5rem); }
+  to { transform: translateX(0); }
+}
+
+:host {
+  position: relative;
+
+  &.glide {
+    animation: glide .4s infinite alternate;
+  }
+
+  &::after {
+    $drop-shadow: drop-shadow(0 0 3px #000000f2);
+    content: '';
+    position: absolute;
+    inset: 30px auto auto 6px;
+    width: 70%;
+    height: 7%;
+    background-color: #00000040;
+    border-radius: 50%;
+    filter: blur(1px)
+            $drop-shadow
+            $drop-shadow
+            $drop-shadow
+            $drop-shadow
+            $drop-shadow;
+  }
+}
+
+img {
+  opacity: .5;
+
+  &.selection {
+    opacity: 1;
+  }
+}

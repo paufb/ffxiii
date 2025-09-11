@@ -1,0 +1,57 @@
+<table>
+  <thead>
+    <tr>
+      <th>Item</th>
+      <th>{{columnTitle()}}</th>
+      <th></th>
+      <th>{{columnTitle()}}</th>
+    </tr>
+  </thead>
+  <tbody (mouseleave)="this.isCursorVisible.set(false)">
+    @for (entryPair of entryPairs(); track $index; let yIndex = $index) {
+      <tr>
+        @for (entry of entryPair; track $index; let xIndex = $index) {
+          @if (entry) {
+            <td
+              (click)="setSelectedEntry(entry)"
+              (mouseenter)="moveCursor($event, xIndex, yIndex)"
+              [class.selected]="selectedEntry() === entry"
+            >
+              @if (selectedEntry() === entry) {
+                <app-cursor glide />
+              }
+              <div>
+                {{entry.name}}
+              </div>
+            </td>
+            <td
+              (click)="setSelectedEntry(entry)"
+              (mouseenter)="moveCursor($event, xIndex, yIndex)"
+              [class.selected]="selectedEntry() === entry"
+            >
+              @if (isEntryInstanceOf(entry, Item)) {
+                {{entry.quantity.toString().padStart(2, '0')}}
+              } @else if (isEntryInstanceOf(entry, Weapon) && entry.isEquipped) {
+                <div [style.display]="'flex'">
+                  <svg width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" fill="white" />
+                  </svg>
+                </div>
+              }
+            </td>
+          } @else {
+            <td></td>
+            <td></td>
+          }
+        }
+      </tr>
+    }
+  </tbody>
+</table>
+@if (isCursorVisible()) {
+  <app-cursor
+    selection
+    [style.left.px]="cursorX()"
+    [style.top.px]="cursorY()"
+  />
+}

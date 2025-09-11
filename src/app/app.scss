@@ -1,0 +1,32 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+app-header {
+  min-height: 2rem;
+  height: var(--app-header-height);
+}
+
+main {
+  flex-grow: 1;
+  height: 0;
+}
+
+div {
+  display: grid;
+  max-width: var(--app-max-width);
+  height: 100%;
+  margin: 0 auto;
+
+  & > ::ng-deep * {
+    grid-area: 1 / 1;
+  }
+}
+
+app-footer {
+  min-height: 2rem;
+  height: var(--app-footer-height);
+}

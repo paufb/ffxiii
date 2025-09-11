@@ -1,0 +1,47 @@
+@font-face {
+  font-family: 'Public Sans';
+  src: local('Public Sans'), url(/assets/fonts/PublicSans-Regular.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Xoireqe';
+  src: local('Xoireqe'), url(/assets/fonts/XOIREQE.TTF) format('truetype');
+}
+
+@font-face {
+  font-family: 'Two Weekends Sans';
+  src: local('Two Weekends Sans'), url(/assets/fonts/twoweekendssans-regular.otf) format('opentype');
+}
+
+:root {
+  --app-max-width: 90rem;
+  --app-padding: .5rem;
+  --app-header-height: 5dvh;
+  --app-footer-height: 5dvh;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(ellipse at bottom,#fff,#969696) no-repeat center center fixed;
+  font-family: 'Two Weekends Sans';
+}
+
+.text-outlined {
+  text-shadow: 2px 0 0 #000000,
+               1.75517px .958851px 0 #000000,
+               1.0806px 1.68294px 0 #000000,
+               .141474px 1.99499px 0 #000000,
+               -.832294px 1.81859px 0 #000000,
+               -1.60229px 1.19694px 0 #000000,
+               -1.97999px .28224px 0 #000000,
+               -1.87291px -.701566px 0 #000000,
+               -1.30729px -1.51361px 0 #000000,
+               -.421592px -1.95506px 0 #000000,
+               .567324px -1.91785px 0 #000000,
+               1.41734px -1.41108px 0 #000000,
+               1.92034px -.558831px 0 #000000;
+}
+
+.box-outlined {
+  box-shadow: 0 0 .125rem .125rem black;
+}
