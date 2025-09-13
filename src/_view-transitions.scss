@@ -1,0 +1,73 @@
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+@keyframes character-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10rem);
+  }
+}
+
+@keyframes character-card-out {
+  to {
+    opacity: 0;
+    transform: translateY(-65rem);
+  }
+}
+
+@for $i from 0 through 5 {
+  ::view-transition-new(home-character-card-#{$i}) {
+    animation: character-card-in .4s ease-out calc($i * 50ms) both;
+  }
+  ::view-transition-old(home-character-card-#{$i}) {
+    animation: character-card-out .4s ease-in calc((5 - $i) * 25ms) both;
+  }
+}
+
+@keyframes navigation-menu-in {
+  from {
+    opacity: 0;
+    transform: translateX(-5rem);
+  }
+}
+
+@keyframes navigation-menu-out {
+  to {
+    opacity: 0;
+    transform: translateX(-5rem);
+  }
+}
+
+::view-transition-new(home-navigation-menu),
+::view-transition-new(inventory-navigation-menu) {
+  animation: navigation-menu-in .4s ease-out both;
+}
+
+::view-transition-old(home-navigation-menu),
+::view-transition-old(inventory-navigation-menu) {
+  animation: navigation-menu-out .4s ease-in both;
+}
+
+@keyframes inventory-content-in {
+  from {
+    opacity: 0;
+    transform: translateX(65rem);
+  }
+}
+
+@keyframes inventory-content-out {
+  to {
+    opacity: 0;
+    transform: translateX(65rem);
+  }
+}
+
+::view-transition-new(inventory-content) {
+  animation: inventory-content-in .4s ease-out both;
+}
+
+::view-transition-old(inventory-content) {
+  animation: inventory-content-out .4s ease-in both;
+}

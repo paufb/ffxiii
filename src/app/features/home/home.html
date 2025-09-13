@@ -1,6 +1,13 @@
-<app-navigation-menu title="Main Menu" [items]="navigationMenuItems" />
-<div class="animatable">
+<app-navigation-menu
+  title="Main Menu"
+  [items]="navigationMenuItems"
+  [style.view-transition-name]="'home-navigation-menu'"
+/>
+<div>
   @for (character of characters; track character.name) {
-    <app-character-card [character]="character" />
+    <app-character-card
+      [character]="character"
+      [style.view-transition-name]="`home-character-card-${$index}`"
+    />
   }
 </div>

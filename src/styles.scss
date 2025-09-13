@@ -1,23 +1,9 @@
-@font-face {
-  font-family: 'Public Sans';
-  src: local('Public Sans'), url(/assets/fonts/PublicSans-Regular.woff2) format('woff2');
-}
-
-@font-face {
-  font-family: 'Xoireqe';
-  src: local('Xoireqe'), url(/assets/fonts/XOIREQE.TTF) format('truetype');
-}
-
-@font-face {
-  font-family: 'Two Weekends Sans';
-  src: local('Two Weekends Sans'), url(/assets/fonts/twoweekendssans-regular.otf) format('opentype');
-}
+@use './fonts.scss';
+@use './view-transitions.scss';
 
 :root {
   --app-max-width: 90rem;
   --app-padding: .5rem;
-  --app-header-height: 5dvh;
-  --app-footer-height: 5dvh;
 }
 
 body {

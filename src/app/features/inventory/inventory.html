@@ -1,5 +1,9 @@
-<app-navigation-menu title="Inventory" [items]="navigationMenuItems" />
-<div>
+<app-navigation-menu
+  title="Inventory"
+  [items]="navigationMenuItems"
+  [style.view-transition-name]="areViewTransitionsEnabled() ? 'inventory-navigation-menu' : null"
+/>
+<div [style.view-transition-name]="areViewTransitionsEnabled() ? 'inventory-content' : null">
   <section>
     <app-title-ruler title="Party" alignment="start" />
     <app-party-highlighter />

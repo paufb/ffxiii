@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component, inject, signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute, NavigationStart, Router, RouterOutlet } from '@angular/router';
+import { filter } from 'rxjs';
 import { NavigationMenu, type NavigationMenuItem } from '@/core/layout/navigation-menu/navigation-menu';
 import { PartyHighlighter } from '@/shared/components/party-highlighter/party-highlighter';
 import { TitleRuler } from '@/shared/components/title-ruler/title-ruler';
@@ -11,6 +13,9 @@ import { TitleRuler } from '@/shared/components/title-ruler/title-ruler';
   styleUrl: './inventory.scss'
 })
 export class Inventory {
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  protected readonly areViewTransitionsEnabled = signal(true);
   protected readonly navigationMenuItems: NavigationMenuItem[] = [
     { title: 'Items', url: '/inventory/items', headerText: 'View consumable items in the party inventory.' },
     { title: 'Weapons', url: '/inventory/weapons', headerText: 'View weapons in the party inventory.' },
@@ -18,4 +23,17 @@ export class Inventory {
     { title: 'Components', url: '/inventory/components', headerText: 'View components in the party inventory.' },
     { title: 'Key Items', url: '/inventory/key-items', headerText: 'View key items in the party inventory.' }
   ];
+
+  constructor() {
+    this.router.events
+      .pipe(
+        takeUntilDestroyed(),
+        filter((e) => e instanceof NavigationStart)
+      )
+      .subscribe(() => {
+        const currentParent = this.activatedRoute.snapshot.routeConfig?.path;
+        const targetParent = this.router.currentNavigation()?.initialUrl.root.children['primary']?.segments[0].path;
+        this.areViewTransitionsEnabled.set(currentParent !== targetParent);
+      });
+  }
 }

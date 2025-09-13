@@ -1,32 +1,13 @@
 :host {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: minmax(2rem, 5dvh) 1fr minmax(2rem, 5dvh);
   height: 100dvh;
-  overflow: hidden;
-}
-
-app-header {
-  min-height: 2rem;
-  height: var(--app-header-height);
 }
 
 main {
-  flex-grow: 1;
-  height: 0;
-}
-
-div {
   display: grid;
-  max-width: var(--app-max-width);
-  height: 100%;
+  align-content: start;
+  width: min(100%, var(--app-max-width));
   margin: 0 auto;
-
-  & > ::ng-deep * {
-    grid-area: 1 / 1;
-  }
-}
-
-app-footer {
-  min-height: 2rem;
-  height: var(--app-footer-height);
+  overflow: hidden;
 }
