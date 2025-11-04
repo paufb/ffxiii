@@ -1,11 +1,3 @@
----
-interface Props {
-  text?: string;
-}
-
-const { text } = Astro.props;
----
-
 <header>
   <hr />
   <div>
@@ -13,7 +5,7 @@ const { text } = Astro.props;
     <span>Help</span>
   </div>
   <hr />
-  <span>{text}</span>
+  <span id="text"></span>
 </header>
 
 <style>
@@ -71,3 +63,13 @@ const { text } = Astro.props;
     }
   }
 </style>
+
+<script>
+  import { HEADER_UPDATE_EVENT_TYPE, type IHeaderUpdateEvent } from '../utils/header';
+
+  window.addEventListener(HEADER_UPDATE_EVENT_TYPE, (event: CustomEventInit<IHeaderUpdateEvent>) => {
+    const textElement = document.getElementById('text');
+    if (!textElement) return;
+    textElement.textContent = event.detail?.text ?? '';
+  });
+</script>
