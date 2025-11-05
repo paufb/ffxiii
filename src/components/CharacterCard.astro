@@ -1,0 +1,128 @@
+---
+import { Image } from 'astro:assets';
+import { type Character } from '../data/classes/character';
+import LeaderIcon from '../assets/icons/Leader-ffxiii-icon.png';
+import GradientText from './GradientText.astro';
+
+interface Props {
+  character: Character;
+}
+
+const { character } = Astro.props;
+---
+
+<div class="card">
+  <Image
+    class:list={['background', character.name.toLowerCase(), { inactive: !character.isInParty }]}
+    src={character.assets.card.imageMetadata}
+    alt={character.name}
+    loading="eager"
+  />
+  {
+    character.isInParty && (
+      <>
+        <GradientText
+          class="role"
+          outlined
+          text={character.role.name.slice(0, 3)}
+          colors={[`${character.role.color} -80%`, 'white 100%']}
+        />
+        <Image class:list={['icon', { member: !character.isPartyLeader }]} src={LeaderIcon} alt="Leader icon" />
+        <span class="status text-outlined">{character.isPartyLeader ? 'Leader' : 'Member'}</span>
+      </>
+    )
+  }
+  <div class="stats">
+    <GradientText class="hp" outlined text="HP" colors={['#ccffcc -80%', 'white 100%']} />
+    <GradientText class="value" outlined text={character.healthPoints} colors={['white 50%', 'gray 100%']} />
+    <GradientText class="cp" outlined text="CP" colors={['red -80%', 'white 100%']} />
+    <GradientText class="value" outlined text={character.crystogenPoints} colors={['white 50%', 'gray 100%']} />
+  </div>
+</div>
+
+<style>
+  .card {
+    position: relative;
+    border: 0.0625rem solid white;
+    border-radius: 0.5rem;
+    box-shadow: 0.5rem 0.5rem 0.3125rem #00000099;
+    overflow: hidden;
+    font-family: 'Xoireqe';
+  }
+
+  .background {
+    --t: scale(1);
+    position: absolute;
+    pointer-events: none;
+    z-index: -2;
+    transform: var(--t);
+
+    &.lightning {
+      --t: scale(1.15) translate(-30%, 7%);
+    }
+
+    &.vanille {
+      --t: scale(1.2) translate(-43.25%, 7%);
+    }
+
+    &.fang {
+      --t: scale(1.1) rotate(15deg) translate(-57%, 1%);
+    }
+
+    &.snow {
+      --t: translate(-49%, 1%);
+    }
+
+    &.sazh {
+      --t: translate(-25.5%, 0.5%);
+    }
+
+    &.hope {
+      --t: translate(-37%, -1%);
+    }
+
+    &.inactive {
+      filter: grayscale(0.7) brightness(0.75);
+    }
+  }
+
+  :global(.role) {
+    position: absolute;
+    inset: 0.3rem 0.3rem auto auto;
+    font-size: 1.3rem;
+  }
+
+  .icon {
+    position: absolute;
+    inset: 2.75rem auto auto 1rem;
+    transform: scale(1.5);
+
+    &.member {
+      filter: grayscale(1);
+    }
+  }
+
+  .status {
+    position: absolute;
+    inset: 3.5rem 0.5rem auto auto;
+    font-size: 1.25rem;
+    color: white;
+  }
+
+  .stats {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    inset: auto 0.3rem 0.3rem 0.3rem;
+
+    & :global(.hp),
+    & :global(.cp) {
+      font-size: 1.1rem;
+    }
+
+    & :global(.value) {
+      text-align: right;
+      font-size: 1.3rem;
+    }
+  }
+</style>

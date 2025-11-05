@@ -1,0 +1,45 @@
+---
+interface Props {
+  text: string | number;
+  colors: `${string} ${number}%`[];
+  outlined?: boolean;
+  class?: string;
+}
+
+const { text, colors, outlined = false, class: className } = Astro.props;
+---
+
+<span
+  class:list={['gradient-text', { outlined }, className]}
+  style={{ backgroundImage: `linear-gradient(${colors.join(',')})` }}
+  data-text={text}>{text}</span
+>
+
+<style>
+  .gradient-text {
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+
+    &.outlined::before {
+      content: attr(data-text);
+      position: absolute;
+      z-index: -1;
+      text-shadow:
+        2px 0 0 #000000,
+        1.75517px 0.958851px 0 #000000,
+        1.0806px 1.68294px 0 #000000,
+        0.141474px 1.99499px 0 #000000,
+        -0.832294px 1.81859px 0 #000000,
+        -1.60229px 1.19694px 0 #000000,
+        -1.97999px 0.28224px 0 #000000,
+        -1.87291px -0.701566px 0 #000000,
+        -1.30729px -1.51361px 0 #000000,
+        -0.421592px -1.95506px 0 #000000,
+        0.567324px -1.91785px 0 #000000,
+        1.41734px -1.41108px 0 #000000,
+        1.92034px -0.558831px 0 #000000;
+    }
+  }
+</style>

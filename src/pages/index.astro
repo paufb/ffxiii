@@ -1,13 +1,40 @@
 ---
+import CharacterCard from '../components/CharacterCard.astro';
 import NavigationMenu, { type INavigationMenuItem } from '../components/NavigationMenu.astro';
+import { characters } from '../data/constants/characters';
 import Layout from '../layouts/Layout.astro';
 
 const navigationMenuItems: INavigationMenuItem[] = [
-	{ title: 'Inventory', url: '/inventory', headerText: 'View party inventory.' },
-	{ title: 'Datalog', url: '/datalog', headerText: 'View log of accumulated data.' },
+  { title: 'Inventory', url: '/inventory', headerText: 'View party inventory.' },
+  { title: 'Datalog', url: '/datalog', headerText: 'View log of accumulated data.' },
 ];
 ---
 
 <Layout>
-	<NavigationMenu title="Main Menu" items={navigationMenuItems} />
+  <div class="content">
+    <NavigationMenu title="Main Menu" items={navigationMenuItems} />
+    <div class="cards">
+      {Object.values(characters).map((character) => <CharacterCard character={character} />)}
+    </div>
+  </div>
 </Layout>
+
+<style>
+  .content {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+  }
+
+  .cards {
+    display: grid;
+    grid-auto-flow: column;
+    gap: 0.5rem;
+    padding: 0 0.75rem 0.75rem 0;
+
+    > * {
+      min-width: 10rem;
+      min-height: 33rem;
+    }
+  }
+</style>
