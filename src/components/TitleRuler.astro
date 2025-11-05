@@ -1,0 +1,38 @@
+---
+interface Props {
+  title: string;
+  alignment: 'start' | 'end';
+  style?: astroHTML.JSX.CSSProperties;
+}
+
+const { title, alignment, style } = Astro.props;
+---
+
+<div style={style}>
+  <div class="title text-outlined" style={{ textAlign: alignment }}>
+    {title}
+  </div>
+  <div>
+    <hr class="ruler box-outlined" />
+  </div>
+</div>
+
+<style>
+  .title {
+    font-weight: bold;
+    color: white;
+    position: relative;
+    z-index: 1;
+  }
+
+  .ruler {
+    padding: 0 0.125rem;
+  }
+
+  hr {
+    border: none;
+    height: 0.125rem;
+    margin: 0;
+    background-color: white;
+  }
+</style>

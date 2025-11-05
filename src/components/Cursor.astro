@@ -1,0 +1,59 @@
+---
+import { Image } from 'astro:assets';
+import cursorImage from '../assets/icons/FFXIII_Pointer_White_BG.webp';
+
+interface Props {
+  id?: string;
+  selection?: boolean;
+  glide?: boolean;
+  style?: astroHTML.JSX.CSSProperties;
+}
+
+const { id, selection = false, glide = false, style } = Astro.props;
+---
+
+<div id={id} class:list={[{ glide }]} style={style}>
+  <Image src={cursorImage} class:list={[{ selection }]} width="53" height="29" alt="Cursor" />
+</div>
+
+<style>
+  img {
+    opacity: 0.5;
+
+    &.selection {
+      opacity: 1;
+    }
+  }
+
+  div {
+    width: fit-content;
+    height: fit-content;
+    position: relative;
+    pointer-events: none;
+
+    &.glide {
+      animation: glide 0.4s infinite alternate;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 30px auto auto 6px;
+      width: 70%;
+      height: 7%;
+      background-color: #00000040;
+      border-radius: 50%;
+      filter: blur(1px) drop-shadow(0 0 3px #000000f2) drop-shadow(0 0 3px #000000f2) drop-shadow(0 0 3px #000000f2)
+        drop-shadow(0 0 3px #000000f2) drop-shadow(0 0 3px #000000f2);
+    }
+  }
+
+  @keyframes glide {
+    from {
+      transform: translateX(-0.5rem);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+</style>

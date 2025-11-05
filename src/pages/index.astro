@@ -1,7 +1,13 @@
 ---
+import NavigationMenu, { type INavigationMenuItem } from '../components/NavigationMenu.astro';
 import Layout from '../layouts/Layout.astro';
+
+const navigationMenuItems: INavigationMenuItem[] = [
+	{ title: 'Inventory', url: '/inventory', headerText: 'View party inventory.' },
+	{ title: 'Datalog', url: '/datalog', headerText: 'View log of accumulated data.' },
+];
 ---
 
 <Layout>
-	<div>Index</div>
+	<NavigationMenu title="Main Menu" items={navigationMenuItems} />
 </Layout>
