@@ -6,12 +6,13 @@ import GradientText from './GradientText.astro';
 
 interface Props {
   character: Character;
+  class?: string;
 }
 
-const { character } = Astro.props;
+const { character, class: className } = Astro.props;
 ---
 
-<div class="card">
+<div class:list={['card', className]}>
   <Image
     class:list={['background', character.name.toLowerCase(), { inactive: !character.isInParty }]}
     src={character.assets.card.imageMetadata}

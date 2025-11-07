@@ -13,28 +13,85 @@ const navigationMenuItems: INavigationMenuItem[] = [
 <Layout>
   <div class="content">
     <NavigationMenu title="Main Menu" items={navigationMenuItems} />
-    <div class="cards">
-      {Object.values(characters).map((character) => <CharacterCard character={character} />)}
+    <div id="cards">
+      {Object.values(characters).map((character) => <CharacterCard class="character-card" character={character} />)}
     </div>
   </div>
 </Layout>
 
 <style>
   .content {
+    --gtc: 23rem 1fr;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: var(--gtc);
     gap: 1rem;
   }
 
-  .cards {
+  #cards {
+    --card-width: 1fr;
     display: grid;
-    grid-auto-flow: column;
+    grid-template-columns: repeat(6, var(--card-width));
     gap: 0.5rem;
     padding: 0 0.75rem 0.75rem 0;
+    overflow-x: auto;
+  }
 
-    > * {
-      min-width: 10rem;
-      min-height: 33rem;
+  :global(.character-card) {
+    height: 33rem;
+  }
+
+  @media (width < 80rem) {
+    .content {
+      --gtc: auto;
+    }
+
+    #cards {
+      --card-width: minmax(10rem, 1fr);
+
+      &.scroll-left {
+        mask-image: linear-gradient(to right, black calc(100% - 2rem), transparent 100%);
+      }
+
+      &.scroll-middle {
+        mask-image: linear-gradient(
+          to right,
+          transparent 0%,
+          black calc(0% + 2rem),
+          black calc(100% - 2rem),
+          transparent 100%
+        );
+      }
+
+      &.scroll-right {
+        mask-image: linear-gradient(to right, transparent 0%, black calc(0% + 2rem));
+      }
     }
   }
 </style>
+
+<script>
+  const container = document.getElementById('cards');
+
+  function checkCardsOverflow() {
+    if (!container) return;
+    const isOverflowing = container.scrollWidth > container.clientWidth;
+    const isAtLeft = container.scrollLeft === 0;
+    const isAtRight = container.scrollLeft + container.clientWidth >= container.scrollWidth - 1;
+    container.className = !isOverflowing ? '' : isAtLeft ? 'scroll-left' : isAtRight ? 'scroll-right' : 'scroll-middle';
+  }
+
+  function toggleCardCarouselListeners(enable: boolean) {
+    if (enable) {
+      checkCardsOverflow();
+      window.addEventListener('resize', checkCardsOverflow);
+      container?.addEventListener('scroll', checkCardsOverflow);
+    } else {
+      window.removeEventListener('resize', checkCardsOverflow);
+      container?.removeEventListener('scroll', checkCardsOverflow);
+    }
+  }
+
+  const mediaQuery = window.matchMedia('(width < 80rem)');
+  toggleCardCarouselListeners(mediaQuery.matches);
+  mediaQuery.addEventListener('change', (event) => toggleCardCarouselListeners(event.matches));
+</script>

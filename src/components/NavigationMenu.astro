@@ -48,7 +48,8 @@ const { title, items, selectedItem } = Astro.props;
     style={{
       display: 'none',
       position: 'absolute',
-      transform: 'translateX(140%)',
+      left: '35%',
+      transform: 'translateX(-100%)',
       transition: '0.075s top',
     }}
   />
@@ -57,7 +58,6 @@ const { title, items, selectedItem } = Astro.props;
 <style>
   div {
     position: relative;
-    width: 23rem;
     z-index: 0;
   }
 
@@ -97,7 +97,8 @@ const { title, items, selectedItem } = Astro.props;
 
     & > span {
       font-weight: bold;
-      transform: translateX(8rem);
+      position: absolute;
+      inset: auto auto auto 35%;
     }
   }
 </style>
