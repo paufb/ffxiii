@@ -1,0 +1,47 @@
+---
+import NavigationMenu, { type INavigationMenuItem } from '../components/NavigationMenu.astro';
+import TitleRuler from '../components/TitleRuler.astro';
+import Layout from './Layout.astro';
+
+const navigationMenuItems: INavigationMenuItem[] = [
+  { title: 'Items', url: '/inventory/items', headerText: 'View consumable items in the party inventory.' },
+  { title: 'Weapons', url: '/inventory/weapons', headerText: 'View weapons in the party inventory.' },
+  { title: 'Accessories', url: '/inventory/accessories', headerText: 'View accessories in the party inventory.' },
+  { title: 'Components', url: '/inventory/components', headerText: 'View components in the party inventory.' },
+  { title: 'Key Items', url: '/inventory/key-items', headerText: 'View key items in the party inventory.' },
+];
+---
+
+<Layout>
+  <div class="content">
+    <NavigationMenu title="Inventory" items={navigationMenuItems} />
+    <div class="inventory-content">
+      <div>PartyHighlighter</div>
+      <div>
+        <TitleRuler title="Inventory" alignment="start" style={{ marginBottom: '.25rem' }} />
+        <slot />
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .content {
+    --gtc: 23rem 1fr;
+    display: grid;
+    grid-template-columns: var(--gtc);
+    gap: 1rem 3.5rem;
+  }
+
+  .inventory-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (width < 80rem) {
+    .content {
+      --gtc: auto;
+    }
+  }
+</style>
