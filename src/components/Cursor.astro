@@ -6,14 +6,17 @@ interface Props {
   id?: string;
   selection?: boolean;
   glide?: boolean;
+  class?: string;
   style?: astroHTML.JSX.CSSProperties;
 }
 
-const { id, selection = false, glide = false, style } = Astro.props;
+const { id, selection = false, glide = false, class: className, style } = Astro.props;
 ---
 
-<div id={id} class:list={[{ glide }]} style={style}>
-  <Image src={cursorImage} class:list={[{ selection }]} width="53" height="29" alt="Cursor" />
+<div id={id} class={className} style={style}>
+  <div class:list={['container', { glide }]}>
+    <Image src={cursorImage} class:list={[{ selection }]} alt="Cursor" />
+  </div>
 </div>
 
 <style>
@@ -25,7 +28,7 @@ const { id, selection = false, glide = false, style } = Astro.props;
     }
   }
 
-  div {
+  .container {
     width: fit-content;
     height: fit-content;
     position: relative;

@@ -1,0 +1,9 @@
+---
+import InventoryTable from '../../components/InventoryTable.astro';
+import { items } from '../../data/constants/items';
+import InventoryLayout from '../../layouts/InventoryLayout.astro';
+---
+
+<InventoryLayout>
+  <InventoryTable columnTitle="Quantity" entries={Object.values(items)} />
+</InventoryLayout>
