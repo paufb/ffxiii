@@ -1,5 +1,5 @@
 ---
-import { type Accessory } from '../data/classes/accessory';
+import { Accessory } from '../data/classes/accessory';
 import { Component } from '../data/classes/component';
 import { Item } from '../data/classes/item';
 import { KeyItem } from '../data/classes/key-item';
@@ -17,6 +17,14 @@ const entryPairs = entries.reduce<(typeof entries)[number][][]>(
   (acc, curr, index) => (index % 2 === 0 ? [...acc, [curr, entries[index + 1]]] : acc),
   []
 );
+
+function getEntryHeaderText(entry: (typeof entries)[number]) {
+  return entry instanceof Item || entry instanceof Accessory
+    ? entry.effect
+    : entry instanceof Weapon || entry instanceof Component
+      ? entry.description
+      : '';
+}
 ---
 
 <inventory-table>
@@ -36,10 +44,10 @@ const entryPairs = entries.reduce<(typeof entries)[number][][]>(
             {entryPair.map((entry, x) =>
               entry ? (
                 <>
-                  <td data-x={x} data-y={y}>
+                  <td data-x={x} data-y={y} data-t={getEntryHeaderText(entry)}>
                     <div>{entry.name}</div>
                   </td>
-                  <td data-x={x} data-y={y}>
+                  <td data-x={x} data-y={y} data-t={getEntryHeaderText(entry)}>
                     {(entry instanceof Item || entry instanceof Component || entry instanceof KeyItem) &&
                       entry.quantity.toString().padStart(2, '0')}
                     {entry instanceof Weapon && entry.isEquipped && (
@@ -167,6 +175,8 @@ const entryPairs = entries.reduce<(typeof entries)[number][][]>(
 </style>
 
 <script>
+  import { updateHeader } from '../utils/header';
+
   class InventoryTable extends HTMLElement {
     private static readonly SELECTED_TABLE_DATA_CLASS = 'selected';
     private selectedTableDataElement?: HTMLTableCellElement;
@@ -184,12 +194,13 @@ const entryPairs = entries.reduce<(typeof entries)[number][][]>(
         });
         tdElement.addEventListener('click', (event) => {
           const tdElement = event.currentTarget as HTMLTableCellElement;
-          const { x, y } = tdElement.dataset;
+          const { x, y, t } = tdElement.dataset;
           this.selectedTableDataElement?.classList.remove(InventoryTable.SELECTED_TABLE_DATA_CLASS);
           tdElement.classList.add(InventoryTable.SELECTED_TABLE_DATA_CLASS);
           this.selectedTableDataElement = tdElement;
           this.setCursorStyle('movable', { display: 'none' });
           this.moveCursor('selection', tdElement, Number(x), Number(y), { display: 'block' });
+          if (t) updateHeader(t);
         });
       });
     }
