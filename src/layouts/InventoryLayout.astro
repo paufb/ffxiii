@@ -1,5 +1,6 @@
 ---
 import NavigationMenu, { type INavigationMenuItem } from '../components/NavigationMenu.astro';
+import PartyHighlighter from '../components/PartyHighlighter.astro';
 import TitleRuler from '../components/TitleRuler.astro';
 import Layout from './Layout.astro';
 
@@ -16,7 +17,7 @@ const navigationMenuItems: INavigationMenuItem[] = [
   <div class="content">
     <NavigationMenu title="Inventory" items={navigationMenuItems} />
     <div class="inventory-content">
-      <div>PartyHighlighter</div>
+      <PartyHighlighter />
       <div>
         <TitleRuler title="Inventory" alignment="start" style={{ marginBottom: '.25rem' }} />
         <slot />

@@ -44,10 +44,20 @@ function getEntryHeaderText(entry: (typeof entries)[number]) {
             {entryPair.map((entry, x) =>
               entry ? (
                 <>
-                  <td data-x={x} data-y={y} data-t={getEntryHeaderText(entry)}>
+                  <td
+                    data-x={x}
+                    data-y={y}
+                    data-c={entry instanceof Weapon ? entry.character.name : undefined}
+                    data-t={getEntryHeaderText(entry)}
+                  >
                     <div>{entry.name}</div>
                   </td>
-                  <td data-x={x} data-y={y} data-t={getEntryHeaderText(entry)}>
+                  <td
+                    data-x={x}
+                    data-y={y}
+                    data-c={entry instanceof Weapon ? entry.character.name : undefined}
+                    data-t={getEntryHeaderText(entry)}
+                  >
                     {(entry instanceof Item || entry instanceof Component || entry instanceof KeyItem) &&
                       entry.quantity.toString().padStart(2, '0')}
                     {entry instanceof Weapon && entry.isEquipped && (
@@ -175,37 +185,33 @@ function getEntryHeaderText(entry: (typeof entries)[number]) {
 </style>
 
 <script>
+  import { type characters } from '../data/constants/characters';
   import { updateHeader } from '../utils/header';
+  import { highlightCharacter } from '../utils/party-highlighter';
 
   class InventoryTable extends HTMLElement {
     private static readonly SELECTED_TABLE_DATA_CLASS = 'selected';
+    private readonly abortController = new AbortController();
     private selectedTableDataElement?: HTMLTableCellElement;
 
     connectedCallback() {
-      this.querySelector('tbody')?.addEventListener('mouseleave', () => {
-        this.setCursorStyle('movable', { display: 'none' });
+      this.querySelector('tbody')?.addEventListener('mouseleave', this.hideMovableCursor.bind(this), {
+        signal: this.abortController.signal,
       });
       this.querySelectorAll('td').forEach((tdElement) => {
         if (!tdElement.hasChildNodes()) return;
-        tdElement.addEventListener('mouseenter', (event) => {
-          const tdElement = event.currentTarget as HTMLTableCellElement;
-          const { x, y } = tdElement.dataset;
-          this.moveCursor('movable', tdElement, Number(x), Number(y));
+        tdElement.addEventListener('mouseenter', this.onTableDataMouseEnter.bind(this), {
+          signal: this.abortController.signal,
         });
-        tdElement.addEventListener('click', (event) => {
-          const tdElement = event.currentTarget as HTMLTableCellElement;
-          const { x, y, t } = tdElement.dataset;
-          this.selectedTableDataElement?.classList.remove(InventoryTable.SELECTED_TABLE_DATA_CLASS);
-          tdElement.classList.add(InventoryTable.SELECTED_TABLE_DATA_CLASS);
-          this.selectedTableDataElement = tdElement;
-          this.setCursorStyle('movable', { display: 'none' });
-          this.moveCursor('selection', tdElement, Number(x), Number(y), { display: 'block' });
-          if (t) updateHeader(t);
-        });
+        tdElement.addEventListener('click', this.onTableDataClick.bind(this), { signal: this.abortController.signal });
       });
     }
 
-    moveCursor(
+    disconnectedCallback() {
+      this.abortController.abort();
+    }
+
+    private moveCursor(
       cursor: 'movable' | 'selection',
       tdElement: HTMLTableCellElement,
       xCellIndex: number,
@@ -221,10 +227,32 @@ function getEntryHeaderText(entry: (typeof entries)[number]) {
       });
     }
 
-    setCursorStyle(cursor: 'movable' | 'selection', style: Partial<CSSStyleDeclaration>) {
+    private setCursorStyle(cursor: 'movable' | 'selection', style: Partial<CSSStyleDeclaration>) {
       const cursorElement = this.querySelector<HTMLElement>(`.inventory-table-${cursor}-cursor`);
       if (!cursorElement) return;
       Object.assign(cursorElement.style, style);
+    }
+
+    private hideMovableCursor() {
+      this.setCursorStyle('movable', { display: 'none' });
+    }
+
+    private onTableDataMouseEnter(event: MouseEvent) {
+      const tdElement = event.currentTarget as HTMLTableCellElement;
+      const { x, y } = tdElement.dataset;
+      this.moveCursor('movable', tdElement, Number(x), Number(y));
+    }
+
+    private onTableDataClick(event: MouseEvent) {
+      const tdElement = event.currentTarget as HTMLTableCellElement;
+      const { x, y, c, t } = tdElement.dataset;
+      this.selectedTableDataElement?.classList.remove(InventoryTable.SELECTED_TABLE_DATA_CLASS);
+      tdElement.classList.add(InventoryTable.SELECTED_TABLE_DATA_CLASS);
+      this.selectedTableDataElement = tdElement;
+      this.setCursorStyle('movable', { display: 'none' });
+      this.moveCursor('selection', tdElement, Number(x), Number(y), { display: 'block' });
+      if (c) highlightCharacter(c as keyof typeof characters);
+      if (t) updateHeader(t);
     }
   }
 

@@ -1,0 +1,108 @@
+---
+import { Image } from 'astro:assets';
+import { characters } from '../data/constants/characters';
+---
+
+<party-highlighter>
+  {
+    Object.values(characters).map((character) => (
+      <div class={character.name.toLowerCase()}>
+        <Image src={character.assets.card.imageMetadata} alt={character.name} loading="eager" />
+      </div>
+    ))
+  }
+</party-highlighter>
+
+<style>
+  party-highlighter {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    background: linear-gradient(to left, black, transparent);
+  }
+
+  div {
+    --container-transform: none;
+    --img-transform: none;
+    position: relative;
+    width: 7rem;
+    height: 3rem;
+    clip-path: polygon(10% 0%, 100% 0%, 90% 100%, 0% 100%);
+    background: black;
+    contain: paint;
+    transform: var(--container-transform);
+
+    &.lightning {
+      --container-transform: translate(30px);
+      --img-transform: scale(0.85) translate(-45.25%, -15.5%);
+    }
+
+    &.vanille {
+      --container-transform: translate(18px);
+      --img-transform: scale(0.85) translate(-61.1%, -16.75%);
+    }
+
+    &.fang {
+      --container-transform: translate(6px);
+      --img-transform: scale(-0.8, 0.8) rotate(18deg) translate(28.5%, -50.5%);
+    }
+
+    &.snow {
+      --container-transform: translate(-6px);
+      --img-transform: scale(0.75) translate(-67.2%, -22.8%);
+    }
+
+    &.sazh {
+      --container-transform: translate(-18px);
+      --img-transform: scale(0.8) translate(-41%, -19%);
+    }
+
+    &.hope {
+      --container-transform: translate(-30px);
+      --img-transform: scale(0.7) translate(-59%, -35.5%);
+    }
+  }
+
+  img {
+    --f: grayscale(0.7) brightness(0.75);
+    transform: var(--img-transform);
+    filter: var(--f);
+
+    &.highlighted {
+      --f: none;
+    }
+  }
+</style>
+
+<script>
+  import { PARTY_HIGHLIGHTER_UPDATE_EVENT_TYPE, type IPartyHighlighterUpdateEvent } from '../utils/party-highlighter';
+
+  class PartyHighlighter extends HTMLElement {
+    private static readonly HIGHLIGHTED_CHARACTER_IMAGE_CLASS = 'highlighted';
+    private readonly abortController = new AbortController();
+    private highlightedCharacterImage?: HTMLImageElement;
+
+    connectedCallback() {
+      window.addEventListener(PARTY_HIGHLIGHTER_UPDATE_EVENT_TYPE, this.onPartyHighlighterUpdate.bind(this), {
+        signal: this.abortController.signal,
+      });
+    }
+
+    disconnectedCallback() {
+      this.abortController.abort();
+    }
+
+    private onPartyHighlighterUpdate(event: CustomEventInit<IPartyHighlighterUpdateEvent>) {
+      this.highlightedCharacterImage?.classList.remove(PartyHighlighter.HIGHLIGHTED_CHARACTER_IMAGE_CLASS);
+      this.highlightedCharacterImage = undefined;
+      const character = event.detail?.character;
+      if (!character) return;
+      const imgElement = this.querySelector<HTMLImageElement>(`.${character?.toLowerCase()} img`);
+      if (!imgElement) return;
+      imgElement.classList.add(PartyHighlighter.HIGHLIGHTED_CHARACTER_IMAGE_CLASS);
+      this.highlightedCharacterImage = imgElement;
+    }
+  }
+
+  customElements.define('party-highlighter', PartyHighlighter);
+</script>
