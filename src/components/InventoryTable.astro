@@ -2,12 +2,13 @@
 import { type Accessory } from '../data/classes/accessory';
 import { Component } from '../data/classes/component';
 import { Item } from '../data/classes/item';
+import { KeyItem } from '../data/classes/key-item';
 import { Weapon } from '../data/classes/weapon';
 import Cursor from './Cursor.astro';
 
 interface Props {
   columnTitle: string;
-  entries: (Item | Weapon | Accessory | Component)[];
+  entries: (Item | Weapon | Accessory | Component | KeyItem)[];
 }
 
 const { columnTitle, entries } = Astro.props;
@@ -39,7 +40,7 @@ const entryPairs = entries.reduce<(typeof entries)[number][][]>(
                     <div>{entry.name}</div>
                   </td>
                   <td data-x={x} data-y={y}>
-                    {(entry instanceof Item || entry instanceof Component) &&
+                    {(entry instanceof Item || entry instanceof Component || entry instanceof KeyItem) &&
                       entry.quantity.toString().padStart(2, '0')}
                     {entry instanceof Weapon && entry.isEquipped && (
                       <div style={{ display: 'flex' }}>
