@@ -4,6 +4,6 @@ import { keyItems } from '../../data/constants/key-items';
 import InventoryLayout from '../../layouts/InventoryLayout.astro';
 ---
 
-<InventoryLayout>
+<InventoryLayout selectedNavigationMenuItem="Key Items">
   <InventoryTable columnTitle="Quantity" entries={Object.values(keyItems)} />
 </InventoryLayout>

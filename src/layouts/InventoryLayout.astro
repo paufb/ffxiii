@@ -4,18 +4,29 @@ import PartyHighlighter from '../components/PartyHighlighter.astro';
 import TitleRuler from '../components/TitleRuler.astro';
 import Layout from './Layout.astro';
 
-const navigationMenuItems: INavigationMenuItem[] = [
+interface Props {
+  selectedNavigationMenuItem?: (typeof navigationMenuItems)[number]['title'];
+}
+
+const { selectedNavigationMenuItem } = Astro.props;
+
+const navigationMenuItems = [
   { title: 'Items', url: '/inventory/items', headerText: 'View consumable items in the party inventory.' },
   { title: 'Weapons', url: '/inventory/weapons', headerText: 'View weapons in the party inventory.' },
   { title: 'Accessories', url: '/inventory/accessories', headerText: 'View accessories in the party inventory.' },
   { title: 'Components', url: '/inventory/components', headerText: 'View components in the party inventory.' },
   { title: 'Key Items', url: '/inventory/key-items', headerText: 'View key items in the party inventory.' },
-];
+] as const satisfies INavigationMenuItem[];
 ---
 
 <Layout>
   <div class="content">
-    <NavigationMenu title="Inventory" items={navigationMenuItems} />
+    <NavigationMenu
+      title="Inventory"
+      items={navigationMenuItems}
+      selectedItem={selectedNavigationMenuItem &&
+        navigationMenuItems.find((i) => i.title === selectedNavigationMenuItem)}
+    />
     <div class="inventory-content">
       <PartyHighlighter />
       <div>

@@ -4,6 +4,6 @@ import { accessories } from '../../data/constants/accessories';
 import InventoryLayout from '../../layouts/InventoryLayout.astro';
 ---
 
-<InventoryLayout>
+<InventoryLayout selectedNavigationMenuItem="Accessories">
   <InventoryTable columnTitle="Equipped" entries={Object.values(accessories)} />
 </InventoryLayout>
