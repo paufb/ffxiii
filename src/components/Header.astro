@@ -1,12 +1,14 @@
-<header>
-  <hr />
-  <div>
-    <span>?</span>
-    <span>Help</span>
-  </div>
-  <hr />
-  <span id="text"></span>
-</header>
+<stat-header>
+  <header>
+    <hr />
+    <div>
+      <span>?</span>
+      <span>Help</span>
+    </div>
+    <hr />
+    <span class="text"></span>
+  </header>
+</stat-header>
 
 <style>
   header {
@@ -67,9 +69,27 @@
 <script>
   import { HEADER_UPDATE_EVENT_TYPE, type IHeaderUpdateEvent } from '../utils/header';
 
-  window.addEventListener(HEADER_UPDATE_EVENT_TYPE, (event: CustomEventInit<IHeaderUpdateEvent>) => {
-    const textElement = document.getElementById('text');
-    if (!textElement) return;
-    textElement.textContent = event.detail?.text ?? '';
-  });
+  class Header extends HTMLElement {
+    private abortController: AbortController | null = null;
+
+    connectedCallback() {
+      this.abortController?.abort();
+      this.abortController = new AbortController();
+      const signal = this.abortController.signal;
+      window.addEventListener(HEADER_UPDATE_EVENT_TYPE, this.updateHeader.bind(this), { signal });
+    }
+
+    disconnectedCallback() {
+      this.abortController?.abort();
+      this.abortController = null;
+    }
+
+    private updateHeader(event: CustomEventInit<IHeaderUpdateEvent>) {
+      const textElement = this.querySelector<HTMLSpanElement>('.text');
+      if (!textElement) return;
+      textElement.textContent = event.detail?.text ?? '';
+    }
+  }
+
+  customElements.define('stat-header', Header);
 </script>
