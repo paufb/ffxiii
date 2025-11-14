@@ -191,24 +191,24 @@ function getEntryHeaderText(entry: (typeof entries)[number]) {
 
   class InventoryTable extends HTMLElement {
     private static readonly SELECTED_TABLE_DATA_CLASS = 'selected';
-    private readonly abortController = new AbortController();
     private selectedTableDataElement?: HTMLTableCellElement;
+    private abortController: AbortController | null = null;
 
     connectedCallback() {
-      this.querySelector('tbody')?.addEventListener('mouseleave', this.hideMovableCursor.bind(this), {
-        signal: this.abortController.signal,
-      });
+      this.abortController?.abort();
+      this.abortController = new AbortController();
+      const signal = this.abortController.signal;
+      this.querySelector('tbody')?.addEventListener('mouseleave', this.hideMovableCursor.bind(this), { signal });
       this.querySelectorAll('td').forEach((tdElement) => {
         if (!tdElement.hasChildNodes()) return;
-        tdElement.addEventListener('mouseenter', this.onTableDataMouseEnter.bind(this), {
-          signal: this.abortController.signal,
-        });
-        tdElement.addEventListener('click', this.onTableDataClick.bind(this), { signal: this.abortController.signal });
+        tdElement.addEventListener('mouseenter', this.onTableDataMouseEnter.bind(this), { signal });
+        tdElement.addEventListener('click', this.onTableDataClick.bind(this), { signal });
       });
     }
 
     disconnectedCallback() {
-      this.abortController.abort();
+      this.abortController?.abort();
+      this.abortController = null;
     }
 
     private moveCursor(
