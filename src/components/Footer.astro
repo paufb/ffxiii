@@ -58,7 +58,7 @@
 
 <script>
   class Footer extends HTMLElement {
-    private intervalId?: ReturnType<typeof setInterval>;
+    private intervalId: ReturnType<typeof setInterval> | null = null;
 
     connectedCallback() {
       this.updateTime();
@@ -67,7 +67,10 @@
     }
 
     disconnectedCallback() {
-      clearInterval(this.intervalId);
+      if (this.intervalId !== null) {
+        clearInterval(this.intervalId);
+        this.intervalId = null;
+      }
     }
 
     private updateTime() {
