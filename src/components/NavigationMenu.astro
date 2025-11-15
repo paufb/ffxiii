@@ -17,7 +17,7 @@ interface Props {
 const { title, items, selectedItem } = Astro.props;
 ---
 
-<div>
+<navigation-menu>
   <TitleRuler title={title} alignment="end" style={{ marginBottom: '.25rem' }} />
   <nav>
     <ul>
@@ -43,7 +43,7 @@ const { title, items, selectedItem } = Astro.props;
     </ul>
   </nav>
   <Cursor
-    id="movable-cursor"
+    class="movable-cursor"
     selection
     style={{
       display: 'none',
@@ -53,12 +53,11 @@ const { title, items, selectedItem } = Astro.props;
       transition: '0.075s top',
     }}
   />
-</div>
+</navigation-menu>
 
 <style>
-  div {
+  navigation-menu {
     position: relative;
-    z-index: 0;
   }
 
   ul {
@@ -106,30 +105,49 @@ const { title, items, selectedItem } = Astro.props;
 <script>
   import { updateHeader } from '../utils/header';
 
-  function moveCursor(liElement: HTMLLIElement, liElementIndex: number) {
-    const isListItemActive = liElement.querySelector('a')?.classList.contains('active');
-    setMovableCursorStyle({
-      display: isListItemActive ? 'none' : 'block',
-      top: `${(liElementIndex + 1) * 32}px`,
-    });
-  }
+  class NavigationMenu extends HTMLElement {
+    private abortController: AbortController | null = null;
 
-  function setMovableCursorStyle(style: Partial<CSSStyleDeclaration>) {
-    const movableCursor = document.getElementById('movable-cursor');
-    if (!movableCursor) return;
-    Object.assign(movableCursor.style, style);
-  }
+    connectedCallback() {
+      this.abortController?.abort();
+      this.abortController = new AbortController();
+      const signal = this.abortController.signal;
+      this.querySelector('nav')?.addEventListener('mouseleave', this.hideMovableCursor.bind(this), { signal });
+      this.querySelectorAll('li').forEach((liElement) =>
+        liElement.addEventListener('mouseenter', this.moveCursorAndUpdateHeader.bind(this), { signal })
+      );
+    }
 
-  document.querySelector('nav')?.addEventListener('mouseleave', () => {
-    setMovableCursorStyle({ display: 'none' });
-  });
+    disconnectedCallback() {
+      this.abortController?.abort();
+      this.abortController = null;
+    }
 
-  document.querySelectorAll('li').forEach((liElement) => {
-    liElement.addEventListener('mouseenter', (event) => {
+    private moveCursor(liElement: HTMLLIElement, liElementIndex: number) {
+      const isListItemActive = liElement.querySelector('a')?.classList.contains('active');
+      this.setMovableCursorStyle({
+        display: isListItemActive ? 'none' : 'block',
+        top: `${(liElementIndex + 1) * 32}px`,
+      });
+    }
+
+    private setMovableCursorStyle(style: Partial<CSSStyleDeclaration>) {
+      const movableCursor = this.querySelector<HTMLDivElement>('.movable-cursor');
+      if (!movableCursor) return;
+      Object.assign(movableCursor.style, style);
+    }
+
+    private hideMovableCursor() {
+      this.setMovableCursorStyle({ display: 'none' });
+    }
+
+    private moveCursorAndUpdateHeader(event: MouseEvent) {
       const liElement = event.target as HTMLLIElement;
       const { index, text } = liElement.dataset;
-      moveCursor(liElement, Number(index));
+      this.moveCursor(liElement, Number(index));
       updateHeader(text!);
-    });
-  });
+    }
+  }
+
+  customElements.define('navigation-menu', NavigationMenu);
 </script>
