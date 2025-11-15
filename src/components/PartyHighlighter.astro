@@ -79,20 +79,22 @@ import { characters } from '../data/constants/characters';
 
   class PartyHighlighter extends HTMLElement {
     private static readonly HIGHLIGHTED_CHARACTER_IMAGE_CLASS = 'highlighted';
-    private readonly abortController = new AbortController();
     private highlightedCharacterImage?: HTMLImageElement;
+    private abortController: AbortController | null = null;
 
     connectedCallback() {
-      window.addEventListener(PARTY_HIGHLIGHTER_UPDATE_EVENT_TYPE, this.onPartyHighlighterUpdate.bind(this), {
-        signal: this.abortController.signal,
-      });
+      this.abortController?.abort();
+      this.abortController = new AbortController();
+      const signal = this.abortController.signal;
+      window.addEventListener(PARTY_HIGHLIGHTER_UPDATE_EVENT_TYPE, this.updatePartyHighlighter.bind(this), { signal });
     }
 
     disconnectedCallback() {
-      this.abortController.abort();
+      this.abortController?.abort();
+      this.abortController = null;
     }
 
-    private onPartyHighlighterUpdate(event: CustomEventInit<IPartyHighlighterUpdateEvent>) {
+    private updatePartyHighlighter(event: CustomEventInit<IPartyHighlighterUpdateEvent>) {
       this.highlightedCharacterImage?.classList.remove(PartyHighlighter.HIGHLIGHTED_CHARACTER_IMAGE_CLASS);
       this.highlightedCharacterImage = undefined;
       const character = event.detail?.character;
