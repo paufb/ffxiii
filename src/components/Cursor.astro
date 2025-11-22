@@ -3,17 +3,16 @@ import { Image } from 'astro:assets';
 import cursorImage from '../assets/icons/FFXIII_Pointer_White_BG.webp';
 
 interface Props {
-  id?: string;
   selection?: boolean;
   glide?: boolean;
   class?: string;
   style?: astroHTML.JSX.CSSProperties;
 }
 
-const { id, selection = false, glide = false, class: className, style } = Astro.props;
+const { selection = false, glide = false, class: className, style } = Astro.props;
 ---
 
-<div id={id} class={className} style={style}>
+<div aria-hidden="true" class={className} style={style}>
   <div class:list={['container', { glide }]}>
     <Image src={cursorImage} class:list={[{ selection }]} alt="Cursor" />
   </div>

@@ -1,18 +1,22 @@
 ---
 import CharacterCard from '../components/CharacterCard.astro';
-import NavigationMenu, { type INavigationMenuItem } from '../components/NavigationMenu.astro';
+import List, { type IListItem } from '../components/List.astro';
+import TitleRuler from '../components/TitleRuler.astro';
 import { characters } from '../data/constants/characters';
 import Layout from '../layouts/Layout.astro';
 
-const navigationMenuItems: INavigationMenuItem[] = [
-  { title: 'Inventory', url: '/inventory', headerText: 'View party inventory.' },
-  { title: 'Datalog', url: '/datalog', headerText: 'View log of accumulated data.' },
+const listItems: IListItem[] = [
+  { text: 'Inventory', url: '/inventory', headerText: 'View party inventory.' },
+  { text: 'Datalog', url: '/datalog', headerText: 'View log of accumulated data.' },
 ];
 ---
 
 <Layout>
   <div class="content">
-    <NavigationMenu title="Main Menu" items={navigationMenuItems} />
+    <div class="titled-column">
+      <TitleRuler title="Main Menu" alignment="end" />
+      <List items={listItems} />
+    </div>
     <div id="cards">
       {Object.values(characters).map((character) => <CharacterCard class="character-card" character={character} />)}
     </div>
@@ -25,6 +29,12 @@ const navigationMenuItems: INavigationMenuItem[] = [
     display: grid;
     grid-template-columns: var(--gtc);
     gap: 1rem;
+  }
+
+  .titled-column {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
   }
 
   #cards {
@@ -71,6 +81,7 @@ const navigationMenuItems: INavigationMenuItem[] = [
 
 <script>
   const container = document.getElementById('cards');
+  let abortController: AbortController | null = null;
 
   function checkCardsOverflow() {
     if (!container) return;
@@ -83,11 +94,12 @@ const navigationMenuItems: INavigationMenuItem[] = [
   function toggleCardCarouselListeners(enable: boolean) {
     if (enable) {
       checkCardsOverflow();
-      window.addEventListener('resize', checkCardsOverflow);
-      container?.addEventListener('scroll', checkCardsOverflow);
+      abortController = new AbortController();
+      window.addEventListener('resize', checkCardsOverflow, { signal: abortController.signal });
+      container?.addEventListener('scroll', checkCardsOverflow, { signal: abortController.signal });
     } else {
-      window.removeEventListener('resize', checkCardsOverflow);
-      container?.removeEventListener('scroll', checkCardsOverflow);
+      abortController?.abort();
+      abortController = null;
     }
   }
 

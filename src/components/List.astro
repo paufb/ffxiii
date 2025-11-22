@@ -1,30 +1,28 @@
 ---
 import Cursor from './Cursor.astro';
-import TitleRuler from './TitleRuler.astro';
 
-export interface INavigationMenuItem {
-  title: string;
-  url: string;
-  headerText: string;
+export interface IListItem {
+  text: string;
+  url?: string;
+  headerText?: string;
 }
 
 interface Props {
-  title: string;
-  items: INavigationMenuItem[];
-  selectedItem?: INavigationMenuItem;
+  items: IListItem[];
+  selectedItem?: IListItem;
 }
 
-const { title, items, selectedItem } = Astro.props;
+const { items, selectedItem } = Astro.props;
 ---
 
-<navigation-menu>
-  <TitleRuler title={title} alignment="end" style={{ marginBottom: '.25rem' }} />
-  <nav>
-    <ul>
-      {
-        items.map((item, i) => (
-          <li data-index={i} data-text={item.headerText}>
-            <a href={item.url} class:list={{ active: selectedItem === item }}>
+<c-list>
+  <ul>
+    {
+      items.map((item, i) => {
+        const Tag = item.url ? 'a' : 'button';
+        return (
+          <li data-i={i} data-t={item.headerText}>
+            <Tag href={item.url} class:list={{ active: selectedItem === item }}>
               {selectedItem === item && (
                 <Cursor
                   glide
@@ -36,28 +34,31 @@ const { title, items, selectedItem } = Astro.props;
                   }}
                 />
               )}
-              <span class="text-outlined">{item.title}</span>
-            </a>
+              <span class="text-outlined">{item.text}</span>
+            </Tag>
           </li>
-        ))
-      }
-    </ul>
-  </nav>
+        );
+      })
+    }
+  </ul>
   <Cursor
     class="movable-cursor"
     selection
     style={{
       display: 'none',
       position: 'absolute',
-      left: '35%',
-      transform: 'translateX(-100%)',
+      inset: 'auto auto auto 35%',
+      transform: 'translate(-100%, 30%)',
+      pointerEvents: 'none',
+      zIndex: 1,
       transition: '0.075s top',
     }}
   />
-</navigation-menu>
+</c-list>
 
 <style>
-  navigation-menu {
+  c-list {
+    display: block;
     position: relative;
   }
 
@@ -71,8 +72,6 @@ const { title, items, selectedItem } = Astro.props;
   li {
     list-style-type: none;
     position: relative;
-    cursor: pointer;
-    width: 100%;
     height: 2rem;
     background: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 100 100'><polygon points='0,48 37,48 100,120 0,100' fill='rgb(30,30,30)' /></svg>")
       no-repeat center/cover;
@@ -87,13 +86,14 @@ const { title, items, selectedItem } = Astro.props;
     }
   }
 
-  a {
-    color: inherit;
-    text-decoration: inherit;
+  a,
+  button {
     display: flex;
     align-items: flex-end;
     width: 100%;
     height: 100%;
+    color: inherit;
+    cursor: pointer;
 
     & > span {
       font-weight: bold;
@@ -101,19 +101,31 @@ const { title, items, selectedItem } = Astro.props;
       inset: auto auto auto 35%;
     }
   }
+
+  a {
+    text-decoration: inherit;
+  }
+
+  button {
+    border: none;
+    margin: 0;
+    padding: 0;
+    background: none;
+    font: inherit;
+  }
 </style>
 
 <script>
   import { updateHeader } from '../utils/header';
 
-  class NavigationMenu extends HTMLElement {
+  class CList extends HTMLElement {
     private abortController: AbortController | null = null;
 
     connectedCallback() {
       this.abortController?.abort();
       this.abortController = new AbortController();
       const signal = this.abortController.signal;
-      this.querySelector('nav')?.addEventListener('mouseleave', this.hideMovableCursor.bind(this), { signal });
+      this.addEventListener('mouseleave', this.hideMovableCursor.bind(this), { signal });
       this.querySelectorAll('li').forEach((liElement) =>
         liElement.addEventListener('mouseenter', this.moveCursorAndUpdateHeader.bind(this), { signal })
       );
@@ -128,7 +140,7 @@ const { title, items, selectedItem } = Astro.props;
       const isListItemActive = liElement.querySelector('a')?.classList.contains('active');
       this.setMovableCursorStyle({
         display: isListItemActive ? 'none' : 'block',
-        top: `${(liElementIndex + 1) * 32}px`,
+        top: `${liElementIndex * 32}px`,
       });
     }
 
@@ -144,11 +156,11 @@ const { title, items, selectedItem } = Astro.props;
 
     private moveCursorAndUpdateHeader(event: MouseEvent) {
       const liElement = event.target as HTMLLIElement;
-      const { index, text } = liElement.dataset;
-      this.moveCursor(liElement, Number(index));
-      updateHeader(text!);
+      const { i, t } = liElement.dataset;
+      this.moveCursor(liElement, Number(i));
+      if (t) updateHeader(t);
     }
   }
 
-  customElements.define('navigation-menu', NavigationMenu);
+  customElements.define('c-list', CList);
 </script>
