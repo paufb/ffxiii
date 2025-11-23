@@ -1,0 +1,62 @@
+---
+interface Props {
+  text: string;
+  blackSide?: 'left' | 'right';
+  blackWidth?: `${number}rem` | `${number}%`;
+  textPaddingLeft?: `${number}rem` | `${number}%`;
+  textPaddingRight?: `${number}rem` | `${number}%`;
+  class?: string;
+}
+
+const { text, blackSide, blackWidth, textPaddingLeft, textPaddingRight, class: className } = Astro.props;
+
+const hasSlot = Astro.slots.has('default');
+---
+
+<button class:list={[{ r: blackSide === 'right' }, className]}>
+  {text}
+  {
+    hasSlot && (
+      <span class:list={[{ r: blackSide === 'right' }]}>
+        <slot />
+      </span>
+    )
+  }
+</button>
+
+<style define:vars={{ bw: blackWidth, tpl: textPaddingLeft, tpr: textPaddingRight }}>
+  button {
+    --deg: 45deg;
+    all: unset;
+    position: relative;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    height: 2rem;
+    background-image: linear-gradient(to bottom, white 0%, transparent 15%),
+      linear-gradient(var(--deg), black, black var(--bw, 25%), transparent 10%),
+      linear-gradient(to bottom, #a5a5a5 80%, black 100%);
+    padding: 0 var(--tpr, 0) 0 var(--tpl, 0);
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    &.r {
+      --deg: -45deg;
+    }
+  }
+
+  span {
+    --i: 0 auto 0 0.5rem;
+    position: absolute;
+    inset: var(--i);
+    display: flex;
+    align-items: center;
+    color: white;
+
+    &.r {
+      --i: 0 0.5rem 0 auto;
+    }
+  }
+</style>

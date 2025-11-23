@@ -5,6 +5,8 @@ import { Item } from '../data/classes/item';
 import { KeyItem } from '../data/classes/key-item';
 import { Weapon } from '../data/classes/weapon';
 import Cursor from './Cursor.astro';
+import EntryButton from './EntryButton.astro';
+import EntryHeader from './EntryHeader.astro';
 
 interface Props {
   columnTitle: string;
@@ -31,10 +33,13 @@ function getEntryHeaderText(entry: (typeof entries)[number]) {
   <table>
     <thead>
       <tr>
-        <th>Item</th>
-        <th>{columnTitle}</th>
-        <th></th>
-        <th>{columnTitle}</th>
+        <th>
+          <EntryHeader text="Item" paddingInline="0.3rem" />
+          <EntryHeader text={columnTitle} align="end" paddingInline="0.3rem" />
+        </th>
+        <th>
+          <EntryHeader text={columnTitle} align="end" paddingInline="0.3rem" />
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -43,37 +48,30 @@ function getEntryHeaderText(entry: (typeof entries)[number]) {
           <tr>
             {entryPair.map((entry, x) =>
               entry ? (
-                <>
-                  <td
-                    data-x={x}
-                    data-y={y}
-                    data-c={entry instanceof Weapon ? entry.character.name : undefined}
-                    data-t={getEntryHeaderText(entry)}
-                  >
-                    <div>{entry.name}</div>
-                  </td>
-                  <td
-                    data-x={x}
-                    data-y={y}
-                    data-c={entry instanceof Weapon ? entry.character.name : undefined}
-                    data-t={getEntryHeaderText(entry)}
+                <td
+                  data-x={x}
+                  data-y={y}
+                  data-c={entry instanceof Weapon ? entry.character.name : undefined}
+                  data-t={getEntryHeaderText(entry)}
+                >
+                  <EntryButton
+                    text={entry.name}
+                    blackSide="right"
+                    blackWidth="3rem"
+                    textPaddingLeft="0.3rem"
+                    textPaddingRight="4rem"
                   >
                     {(entry instanceof Item || entry instanceof Component || entry instanceof KeyItem) &&
                       entry.quantity.toString().padStart(2, '0')}
                     {entry instanceof Weapon && entry.isEquipped && (
-                      <div style={{ display: 'flex' }}>
-                        <svg width="24" height="24" viewBox="0 0 24 24">
-                          <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" fill="white" />
-                        </svg>
-                      </div>
+                      <svg width="24" height="24" viewBox="0 0 24 24">
+                        <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z" fill="white" />
+                      </svg>
                     )}
-                  </td>
-                </>
+                  </EntryButton>
+                </td>
               ) : (
-                <>
-                  <td />
-                  <td />
-                </>
+                <td />
               )
             )}
           </tr>
@@ -81,27 +79,8 @@ function getEntryHeaderText(entry: (typeof entries)[number]) {
       }
     </tbody>
   </table>
-  <Cursor
-    selection
-    class="inventory-table-movable-cursor"
-    style={{
-      display: 'none',
-      position: 'absolute',
-      transform: 'translate(-73%, -10%)',
-      pointerEvents: 'none',
-      transition: '.075s top, .075s left',
-    }}
-  />
-  <Cursor
-    glide
-    class="inventory-table-selection-cursor"
-    style={{
-      display: 'none',
-      position: 'absolute',
-      transform: 'translate(-73%, -10%)',
-      pointerEvents: 'none',
-    }}
-  />
+  <Cursor selection class="m-c" />
+  <Cursor glide class="s-c" />
 </inventory-table>
 
 <style>
@@ -119,68 +98,23 @@ function getEntryHeaderText(entry: (typeof entries)[number]) {
     background-color: black;
   }
 
-  th {
-    font: 0.75rem 'Xoireqe';
-    height: 1.5rem;
-    color: #d0d0d0;
-    background: linear-gradient(to bottom, black, #2f2f2f);
-
-    &:first-child {
-      text-align: start;
-      padding-left: 0.3rem;
-    }
-
-    &:nth-child(even) {
-      width: 2.5rem;
-      direction: rtl;
-      padding-right: 0.3rem;
-      box-sizing: border-box;
-    }
+  th:first-child {
+    display: grid;
+    grid-auto-flow: column;
   }
 
-  td {
-    position: relative;
-    height: 2.25rem;
-    box-sizing: border-box;
-    border-top: 0.0625rem solid white;
-    border-bottom: 0.0625rem solid black;
-    cursor: pointer;
+  :global(.m-c),
+  :global(.s-c) {
+    display: none;
+    position: absolute;
+    transform: translate(-73%, -10%);
+    pointerevents: none;
+  }
 
-    &:nth-child(even) {
-      text-align: center;
-      color: white;
-    }
-
-    &:nth-child(odd) {
-      padding: 0 1.75rem 0 0.3rem;
-      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100%' height='100%' viewBox='0 0 100 100'><polygon points='0,0 100,0 0,100' fill='rgb(165, 165, 165)' /></svg>");
-      background-size: cover;
-
-      div {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-    }
-
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 0.175rem;
-    }
-
-    &::before {
-      top: 0;
-      background: linear-gradient(to bottom, white, transparent);
-    }
-
-    &::after {
-      bottom: 0;
-      background: linear-gradient(to top, black, transparent);
-    }
+  :global(.m-c) {
+    transition:
+      0.075s top,
+      0.075s left;
   }
 </style>
 
@@ -228,7 +162,8 @@ function getEntryHeaderText(entry: (typeof entries)[number]) {
     }
 
     private setCursorStyle(cursor: 'movable' | 'selection', style: Partial<CSSStyleDeclaration>) {
-      const cursorElement = this.querySelector<HTMLElement>(`.inventory-table-${cursor}-cursor`);
+      const cursorClass = cursor === 'movable' ? 'm-c' : 's-c';
+      const cursorElement = this.querySelector<HTMLElement>(`.${cursorClass}`);
       if (!cursorElement) return;
       Object.assign(cursorElement.style, style);
     }

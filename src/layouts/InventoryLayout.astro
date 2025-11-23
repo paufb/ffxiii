@@ -1,4 +1,7 @@
 ---
+import CursorWrapper from '../components/CursorWrapper.astro';
+import EntryButton from '../components/EntryButton.astro';
+import EntryHeader from '../components/EntryHeader.astro';
 import List, { type IListItem } from '../components/List.astro';
 import PartyHighlighter from '../components/PartyHighlighter.astro';
 import TitleRuler from '../components/TitleRuler.astro';
@@ -21,12 +24,27 @@ const listItems = [
 
 <Layout>
   <div class="content">
-    <div class="col side titled">
-      <TitleRuler title="Inventory" alignment="end" />
-      <List items={listItems} selectedItem={listItems.find((i) => i.text === selectedNavigationMenuItem)} />
-    </div>
+    <aside>
+      <div class="s-top col titled">
+        <TitleRuler title="Inventory" alignment="end" />
+        <List items={listItems} selectedItem={listItems.find((i) => i.text === selectedNavigationMenuItem)} />
+      </div>
+      <div class="s-bottom col titled">
+        <TitleRuler title="Sort" alignment="end" />
+        <div>
+          <EntryHeader text="Method" align="center" />
+          <CursorWrapper xPercent={39} yPercent={20} trackActive>
+            <EntryButton text="Categorize" textPaddingLeft="40%" />
+            <EntryButton text="Alphabetize" textPaddingLeft="40%" />
+          </CursorWrapper>
+        </div>
+      </div>
+    </aside>
     <div class="col main">
-      <PartyHighlighter />
+      <div class="col titled">
+        <TitleRuler title="Party" alignment="start" />
+        <PartyHighlighter />
+      </div>
       <div class="col titled">
         <TitleRuler title="Inventory" alignment="start" />
         <div>
@@ -43,18 +61,30 @@ const listItems = [
     display: grid;
     grid-template-columns: var(--gtc);
     gap: 1rem 3.5rem;
-    align-items: start;
+  }
+
+  .s-top {
+    --p: sticky;
+    position: var(--p);
+    top: 1rem;
+    align-self: start;
+  }
+
+  .s-bottom {
+    --p: sticky;
+    position: var(--p);
+    bottom: 1rem;
+    align-self: end;
+  }
+
+  aside {
+    display: grid;
+    gap: 1rem;
   }
 
   .col {
     display: flex;
     flex-direction: column;
-  }
-
-  .side {
-    --p: sticky;
-    position: var(--p);
-    top: 1rem;
   }
 
   .titled {
@@ -68,9 +98,11 @@ const listItems = [
   @media (width < 80rem) {
     .content {
       --gtc: auto;
+      align-content: start;
     }
 
-    .side {
+    .s-top,
+    .s-bottom {
       --p: initial;
     }
   }

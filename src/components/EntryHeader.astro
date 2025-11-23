@@ -1,0 +1,24 @@
+---
+interface Props {
+  text: string;
+  align?: 'start' | 'center' | 'end';
+  paddingInline?: CSSStyleDeclaration['paddingInline'];
+}
+
+const { text, align, paddingInline } = Astro.props;
+---
+
+<span>{text}</span>
+
+<style define:vars={{ jc: align, pi: paddingInline }}>
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: var(--jc, start);
+    padding-inline: var(--pi, 0);
+    font: 0.75rem 'Xoireqe';
+    height: 1.5rem;
+    color: #d0d0d0;
+    background: linear-gradient(to bottom, black, #2f2f2f);
+  }
+</style>

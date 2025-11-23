@@ -1,0 +1,116 @@
+---
+import Cursor from './Cursor.astro';
+
+interface Props {
+  xPercent?: number;
+  yPercent?: number;
+  trackActive?: boolean;
+}
+
+const { xPercent, yPercent, trackActive } = Astro.props;
+---
+
+<cursor-wrapper x={xPercent} y={yPercent} track-active={trackActive}>
+  <div>
+    <slot />
+  </div>
+  <Cursor selection class="m-c" />
+  {trackActive && <Cursor glide class="a-c" />}
+</cursor-wrapper>
+
+<style>
+  cursor-wrapper {
+    display: block;
+    position: relative;
+  }
+
+  :global(.m-c),
+  :global(.a-c) {
+    display: none;
+    position: absolute;
+    transform: translateX(-100%);
+    pointerevents: none;
+  }
+
+  :global(.m-c) {
+    transition:
+      0.075s top,
+      0.075s left;
+  }
+</style>
+
+<script>
+  class CursorWrapper extends HTMLElement {
+    private xPercent: number;
+    private yPercent: number;
+    private trackActive: boolean;
+    private abortController: AbortController | null = null;
+    private activeChild: Element | null = null;
+
+    constructor() {
+      super();
+      this.xPercent = parseFloat(this.getAttribute('x') ?? '50');
+      this.yPercent = parseFloat(this.getAttribute('y') ?? '50');
+      this.trackActive = !!this.getAttribute('track-active');
+    }
+
+    connectedCallback() {
+      const div = this.querySelector('div');
+      if (!div) return;
+      this.abortController?.abort();
+      this.abortController = new AbortController();
+      const { signal } = this.abortController;
+      for (const child of div.children) {
+        child.addEventListener('mouseenter', () => this.moveCursor('movable', child), { signal });
+        if (this.trackActive) {
+          child.addEventListener(
+            'click',
+            () => {
+              this.moveCursor('active', child);
+              this.hideMovableCursor();
+            },
+            { signal }
+          );
+        }
+      }
+      this.addEventListener('mouseleave', this.hideMovableCursor, { signal });
+    }
+
+    disconnectedCallback() {
+      this.abortController?.abort();
+      this.abortController = null;
+    }
+
+    private setCursorStyle(cursor: 'movable' | 'active', style: Partial<CSSStyleDeclaration>) {
+      const cursorClass = cursor === 'movable' ? 'm-c' : 'a-c';
+      const cursorElement = this.querySelector<HTMLElement>(`.${cursorClass}`);
+      if (!cursorElement) return;
+      Object.assign(cursorElement.style, style);
+    }
+
+    private hideMovableCursor() {
+      this.setCursorStyle('movable', { display: 'none' });
+    }
+
+    private moveCursor(cursor: 'movable' | 'active', child: Element) {
+      if (this.activeChild === child) {
+        this.hideMovableCursor();
+        return;
+      }
+      const div = this.querySelector('div');
+      if (!div) return;
+      const wrapperRect = this.getBoundingClientRect();
+      const childRect = child.getBoundingClientRect();
+      const top = childRect.top - wrapperRect.top + (childRect.height * this.yPercent) / 100;
+      const left = childRect.left - wrapperRect.left + (childRect.width * this.xPercent) / 100;
+      if (cursor === 'active') this.activeChild = child;
+      this.setCursorStyle(cursor, {
+        display: 'block',
+        top: `${top}px`,
+        left: `${left}px`,
+      });
+    }
+  }
+
+  customElements.define('cursor-wrapper', CursorWrapper);
+</script>
