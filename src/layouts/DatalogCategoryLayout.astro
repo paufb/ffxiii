@@ -1,0 +1,29 @@
+---
+import { type IListItem } from '../components/List.astro';
+import List from '../components/List.astro';
+import DatalogLayout from './DatalogLayout.astro';
+
+interface Props {
+  listItem: IListItem;
+  mode: 'columns' | 'rows';
+}
+
+const { listItem, mode } = Astro.props;
+---
+
+<DatalogLayout mode={mode}>
+  <div class="aside-slot" slot="aside-slot">
+    <List items={[listItem]} selectedItem={listItem} />
+    <slot name="aside-slot" />
+  </div>
+  <div slot="content-slot">
+    <slot name="content-slot" />
+  </div>
+</DatalogLayout>
+
+<style>
+  .aside-slot {
+    display: grid;
+    gap: 2rem;
+  }
+</style>

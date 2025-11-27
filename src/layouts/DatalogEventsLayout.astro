@@ -1,0 +1,32 @@
+---
+import CursorWrapper from '../components/CursorWrapper.astro';
+import EntryButton from '../components/EntryButton.astro';
+import EntryHeader from '../components/EntryHeader.astro';
+import { type IListItem } from '../components/List.astro';
+import TitleRuler from '../components/TitleRuler.astro';
+import { chapters } from '../pages/datalog/events/chapters';
+import DatalogCategoryLayout from './DatalogCategoryLayout.astro';
+
+const listItem: IListItem = {
+  text: 'Events',
+  url: '/datalog/events',
+  headerText: 'Review entries related to recent events.',
+};
+---
+
+<DatalogCategoryLayout listItem={listItem} mode="columns">
+  <div slot="aside-slot">
+    <TitleRuler title="" alignment="end" style={{ marginBottom: '0.25rem' }} />
+    <EntryHeader text="Chapter" align="center" />
+    <CursorWrapper xPercent={39} yPercent={20}>
+      {
+        Object.values(chapters).map((chapter) => (
+          <EntryButton text={chapter.name} href={`/datalog/events/${chapter.slug}`} textPaddingLeft="40%" />
+        ))
+      }
+    </CursorWrapper>
+  </div>
+  <div slot="content-slot">
+    <slot />
+  </div>
+</DatalogCategoryLayout>

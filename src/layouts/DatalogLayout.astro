@@ -1,0 +1,39 @@
+---
+import TitleRuler from '../components/TitleRuler.astro';
+import Layout from './Layout.astro';
+
+interface Props {
+  mode?: 'columns' | 'rows';
+}
+
+const { mode } = Astro.props;
+---
+
+<Layout>
+  <div class:list={['content', { r: mode === 'rows' }]}>
+    <aside>
+      <TitleRuler title="Datalog" alignment="end" style={{ marginBottom: '0.25rem' }} />
+      <slot name="aside-slot" />
+    </aside>
+    <div>
+      <slot name="content-slot" />
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .content {
+    --gtc: 27.5rem 1fr;
+    display: grid;
+    grid-template-columns: var(--gtc);
+    gap: 1rem 3.5rem;
+
+    &.r {
+      --gtc: initial;
+    }
+
+    @media (width < 80rem) {
+      --gtc: initial;
+    }
+  }
+</style>

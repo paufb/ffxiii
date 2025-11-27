@@ -1,0 +1,76 @@
+---
+import List, { type IListItem } from '../../components/List.astro';
+import DatalogLayout from '../../layouts/DatalogLayout.astro';
+
+const listItems: IListItem[] = [
+  {
+    text: 'Events',
+    url: '/datalog/events',
+    headerText: 'Review entries related to recent events.',
+  },
+  {
+    text: 'People',
+    url: '/datalog/people',
+    headerText: 'Review entries related to specific people.',
+  },
+  {
+    text: 'The Thirteen Days',
+    url: '/datalog/the-thirteen-days',
+    headerText: 'Review entries related to the days leading up to the Purge.',
+  },
+  {
+    text: 'History and Myth',
+    url: '/datalog/history-and-myth',
+    headerText: 'Review entries related to history and myth.',
+  },
+  {
+    text: 'Locales',
+    url: '/datalog/locales',
+    headerText: 'Review entries related to specific locales.',
+  },
+  {
+    text: 'Cocoon Society',
+    url: '/datalog/cocoon-society',
+    headerText: 'Review entries related to Cocoon society.',
+  },
+  {
+    text: "The Fal'Cie",
+    url: '/datalog/the-falcie',
+    headerText: "Review entries related to the fal'Cie",
+  },
+  {
+    text: 'Analects',
+    url: '/datalog/analects',
+    headerText: 'Review fragments of ancient writing and prophecy.',
+  },
+  {
+    text: 'Primers: Gameplay Basics',
+    url: '/datalog/primers-gameplay-basics',
+    headerText: 'Review entries related to general gameplay.',
+  },
+  {
+    text: 'Primers: Battle',
+    url: '/datalog/primers-battle',
+    headerText: 'Review entries related to battle.',
+  },
+  {
+    text: 'Primers: Exploration',
+    url: '/datalog/primers-exploration',
+    headerText: 'Review entries related to exploration.',
+  },
+  {
+    text: 'Primers: The Main Menu',
+    url: '/datalog/primers-the-main-menu',
+    headerText: 'Review entries related to the main menu.',
+  },
+  {
+    text: 'Enemy Intel',
+    url: '/datalog/enemy-intel',
+    headerText: 'View intel on previously defeated enemies.',
+  },
+];
+---
+
+<DatalogLayout>
+  <List items={listItems} slot="aside-slot" />
+</DatalogLayout>

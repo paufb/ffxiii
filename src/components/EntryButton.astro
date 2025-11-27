@@ -1,6 +1,7 @@
 ---
 interface Props {
   text: string;
+  href?: string;
   blackSide?: 'left' | 'right';
   blackWidth?: `${number}rem` | `${number}%`;
   textPaddingLeft?: `${number}rem` | `${number}%`;
@@ -8,12 +9,17 @@ interface Props {
   class?: string;
 }
 
-const { text, blackSide, blackWidth, textPaddingLeft, textPaddingRight, class: className } = Astro.props;
+const { text, href, blackSide, blackWidth, textPaddingLeft, textPaddingRight, class: className } = Astro.props;
 
 const hasSlot = Astro.slots.has('default');
+const Tag = href ? 'a' : 'button';
 ---
 
-<button class:list={[{ r: blackSide === 'right' }, className]}>
+<Tag
+  href={href}
+  class:list={[{ r: blackSide === 'right' }, className]}
+  style={{ '--bw': blackWidth, '--tpl': textPaddingLeft, '--tpr': textPaddingRight }}
+>
   {text}
   {
     hasSlot && (
@@ -22,15 +28,17 @@ const hasSlot = Astro.slots.has('default');
       </span>
     )
   }
-</button>
+</Tag>
 
-<style define:vars={{ bw: blackWidth, tpl: textPaddingLeft, tpr: textPaddingRight }}>
+<style>
+  a,
   button {
     --deg: 45deg;
     all: unset;
     position: relative;
     cursor: pointer;
-    display: block;
+    display: flex;
+    align-items: center;
     width: 100%;
     height: 2rem;
     background-image: linear-gradient(to bottom, white 0%, transparent 15%),

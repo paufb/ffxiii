@@ -1,0 +1,27 @@
+---
+import { type GetStaticPaths } from 'astro';
+import { chapters } from '../chapters';
+import LogEntryLayout from '../../../../layouts/LogEntryLayout.astro';
+import { type IListItem } from '../../../../components/List.astro';
+
+export const getStaticPaths = (() => {
+  return Object.values(chapters).flatMap((chapter) =>
+    chapter.logEntries.map((logEntry) => ({
+      params: { chapter: chapter.slug, logentry: logEntry.slug },
+      props: { chapter, logEntry },
+    }))
+  );
+}) satisfies GetStaticPaths;
+
+const { logEntry } = Astro.props;
+
+const listItem: IListItem = {
+  text: 'Events',
+  url: '/datalog/events',
+  headerText: 'Review entries related to recent events.',
+};
+---
+
+<LogEntryLayout listItem={listItem} logEntry={logEntry}>
+  {logEntry.description}
+</LogEntryLayout>

@@ -1,0 +1,35 @@
+---
+import CursorWrapper from '../../../../components/CursorWrapper.astro';
+import EntryButton from '../../../../components/EntryButton.astro';
+import EntryHeader from '../../../../components/EntryHeader.astro';
+import TitleRuler from '../../../../components/TitleRuler.astro';
+import DatalogEventsLayout from '../../../../layouts/DatalogEventsLayout.astro';
+import { chapters } from '../chapters';
+import { type GetStaticPaths } from 'astro';
+
+export const getStaticPaths = (() => {
+  return Object.values(chapters).map((chapter) => ({
+    params: { chapter: chapter.slug },
+    props: { chapter },
+  }));
+}) satisfies GetStaticPaths;
+
+const { chapter } = Astro.props;
+---
+
+<DatalogEventsLayout>
+  <TitleRuler title="Events" alignment="start" style={{ marginBottom: '0.25rem' }} />
+  <EntryHeader text="Log Entry" paddingInline="0.3rem" />
+  <CursorWrapper xPercent={3} yPercent={20}>
+    {
+      chapter.logEntries.map((logEntry) => (
+        <EntryButton
+          text={logEntry.name}
+          href={`/datalog/events/${chapter.slug}/${logEntry.slug}`}
+          blackSide="right"
+          textPaddingLeft="2rem"
+        />
+      ))
+    }
+  </CursorWrapper>
+</DatalogEventsLayout>
