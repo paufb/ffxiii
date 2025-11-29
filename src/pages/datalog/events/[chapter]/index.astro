@@ -17,7 +17,7 @@ export const getStaticPaths = (() => {
 const { chapter } = Astro.props;
 ---
 
-<DatalogEventsLayout>
+<DatalogEventsLayout selectedChapterSlug={chapter.slug}>
   <TitleRuler title="Events" alignment="start" style={{ marginBottom: '0.25rem' }} />
   <EntryHeader text="Log Entry" paddingInline="0.3rem" />
   <CursorWrapper xPercent={3} yPercent={20}>

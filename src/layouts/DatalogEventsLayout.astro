@@ -12,13 +12,26 @@ const listItem: IListItem = {
   url: '/datalog/events',
   headerText: 'Review entries related to recent events.',
 };
+
+interface Props {
+  selectedChapterSlug?: (typeof chapters)[keyof typeof chapters]['slug'];
+}
+
+const { selectedChapterSlug } = Astro.props;
 ---
 
 <DatalogCategoryLayout listItem={listItem} mode="columns">
   <div slot="aside-slot">
     <TitleRuler title="" alignment="end" style={{ marginBottom: '0.25rem' }} />
     <EntryHeader text="Chapter" align="center" />
-    <CursorWrapper xPercent={39} yPercent={20}>
+    <CursorWrapper
+      xPercent={39}
+      yPercent={20}
+      preselection={{
+        childIndex: Object.values(chapters).findIndex((c) => c.slug === selectedChapterSlug),
+        totalChildren: Object.values(chapters).length,
+      }}
+    >
       {
         Object.values(chapters).map((chapter) => (
           <EntryButton text={chapter.name} href={`/datalog/events/${chapter.slug}`} textPaddingLeft="40%" />
