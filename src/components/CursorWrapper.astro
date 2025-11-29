@@ -2,20 +2,41 @@
 import Cursor from './Cursor.astro';
 
 interface Props {
-  xPercent?: number;
-  yPercent?: number;
+  xPercent: number;
+  yPercent: number;
   trackActive?: boolean;
+  preselection?: {
+    childIndex: number;
+    totalChildren: number;
+  };
 }
 
-const { xPercent, yPercent, trackActive } = Astro.props;
+const { xPercent, yPercent, trackActive, preselection } = Astro.props;
 ---
 
-<cursor-wrapper x={xPercent} y={yPercent} track-active={trackActive}>
+<cursor-wrapper x={xPercent} y={yPercent} track-active={trackActive} preselected={preselection?.childIndex}>
   <div>
     <slot />
   </div>
   <Cursor selection class="m-c" />
-  {trackActive && <Cursor glide class="a-c" />}
+  {
+    (trackActive || preselection) && (
+      <Cursor
+        glide
+        class="a-c"
+        style={
+          preselection && {
+            display: 'block',
+            top: `${
+              (preselection.childIndex / preselection.totalChildren) * 100 +
+              (yPercent / 100) * (100 / preselection.totalChildren)
+            }%`,
+            left: `${xPercent}%`,
+          }
+        }
+      />
+    )
+  }
 </cursor-wrapper>
 
 <style>
@@ -44,6 +65,7 @@ const { xPercent, yPercent, trackActive } = Astro.props;
     private xPercent: number;
     private yPercent: number;
     private trackActive: boolean;
+    private preselectedChildIndex: number | null;
     private abortController: AbortController | null = null;
     private activeChild: Element | null = null;
 
@@ -52,6 +74,8 @@ const { xPercent, yPercent, trackActive } = Astro.props;
       this.xPercent = parseFloat(this.getAttribute('x') ?? '50');
       this.yPercent = parseFloat(this.getAttribute('y') ?? '50');
       this.trackActive = !!this.getAttribute('track-active');
+      const preselectedAttr = this.getAttribute('preselected');
+      this.preselectedChildIndex = preselectedAttr !== null ? Number(preselectedAttr) : null;
     }
 
     connectedCallback() {
@@ -71,6 +95,9 @@ const { xPercent, yPercent, trackActive } = Astro.props;
             },
             { signal }
           );
+        }
+        if (this.preselectedChildIndex !== null) {
+          this.activeChild = div.children[this.preselectedChildIndex];
         }
       }
       this.addEventListener('mouseleave', this.hideMovableCursor, { signal });
